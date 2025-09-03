@@ -8,15 +8,26 @@
 
 ## Running the Application
 
-Start a virtual environment
+- Start a virtual environment
 ```bash
 python -m venv venv
 source venv/Scripts/activate
 ```
 
-Install requirements
+- Install requirements
 ```bash
 pip install -r requirements.txt
+```
+
+- Initialize database
+```bash
+sqlite3 database.db < db/schema.sql
+sqlite3 database.db < db/init.sql
+```
+
+- In addition for dummy data use
+```bash
+sqlite3 databases.db < db/dummy.sql
 ```
 
 ## Evaluation
