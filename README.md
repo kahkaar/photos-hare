@@ -4,7 +4,21 @@
 
 ## Features
 
-- Coming soon.
+### Initial Features
+- [ ] Create user
+  - [ ] Log in as user
+
+- [ ] Share an image with a title, a description and tags
+  - [ ] Allow unlisting of posts (doesn't show on main page or profile page)
+  - [ ] Allow editing of posts (title, description, tags)
+  - [ ] Allow removing of posts
+  - [ ] Allow liking of posts
+
+- [ ] Create comments on posts
+  - [ ] Allow editing and removing of comments
+  - [ ] Allow liking of comments
+
+- More features coming soon™️
 
 ## Running the Application
 
