@@ -10,8 +10,8 @@
 
 - Start a virtual environment
 ```bash
-python -m venv venv
-source venv/Scripts/activate
+python -m venv .venv
+source .venv/bin/activate
 ```
 
 - Install requirements
