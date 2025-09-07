@@ -22,26 +22,56 @@
 
 ## Running the Application
 
-- Start a virtual environment
+1. Create a virtual environment
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-- Install requirements
+2. Install [Flask](https://pypi.org/project/Flask/)
+```bash
+pip install Flask
+```
+
+**OR**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-- Initialize database
+3. Initialize database
 ```bash
 sqlite3 database.db < db/schema.sql
 sqlite3 database.db < db/init.sql
 ```
 
-- In addition for dummy data use
+4. Start the server using Flask
 ```bash
+flask run
+```
+
+### Developing the Application
+
+1. Create a virtual environment
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+2. Install developer requirements
+```bash
+pip install -r dev.requirements.txt
+```
+
+3. Initialize database
+```bash
+sqlite3 database.db < db/schema.sql
 sqlite3 database.db < db/dummy.sql
+```
+
+4. Start the server in **debug mode**
+```bash
+flask run --debug
 ```
 
 ## Evaluation
