@@ -1,41 +1,58 @@
 BEGIN;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS post_comments;
+DROP TABLE IF EXISTS posts_likes;
+DROP TABLE IF EXISTS posts_comments;
+DROP TABLE IF EXISTS posts_comments_likes;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS posts_tags;
 
--- N.B. Triggers associated with 'table' are dropped on `DROP TABLE [IF EXISTS] 'table'`.
+-- N.B. Triggers and indices associated with 'table' are dropped on `DROP TABLE [IF EXISTS] 'table'`.
 
 CREATE TABLE users (
-  id BLOB PRIMARY KEY DEFAULT (LOWER(HEX(RANDOMBLOB(16)))),
-  username TEXT NOT NULL UNIQUE,
+  id BLOB PRIMARY KEY DEFAULT (LOWER(HEX(RANDOMBLOB(16)))), -- UUID
+  username TEXT NOT NULL UNIQUE, -- Should always be lowercase
+  display_name TEXT UNIQUE, -- Allows username capitalization to be changed; LOWER(display_name) = username
   password_hash TEXT NOT NULL,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
-  updated_at INTEGER,
-  CHECK(LENGTH(username) >= 4)
+  updated_at INTEGER, -- This and every other `updated_at` column is updated by a trigger; do not update
+  CHECK(
+    LENGTH(username) >= 4
+    AND LENGTH(username) <= 24
+    AND LOWER(username) = username
+  )
 );
 
 CREATE TABLE posts (
   id BLOB PRIMARY KEY DEFAULT (LOWER(HEX(RANDOMBLOB(16)))),
   title TEXT,
   description TEXT,
-  image_path TEXT NOT NULL, -- Store images inside a directory, instead of the database itself.
+  image_path TEXT NOT NULL, -- Store images inside a directory, instead of the database-file itself.
   unlisted BOOLEAN NOT NULL DEFAULT FALSE,
-  likes INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
   updated_at INTEGER,
   user_id BLOB REFERENCES users ON DELETE CASCADE
 );
 
-CREATE TABLE post_comments (
+CREATE TABLE posts_likes (
+  post_id BLOB REFERENCES posts ON DELETE CASCADE,
+  user_id BLOG REFERENCES users ON DELETE CASCADE,
+  type BOOLEAN NOT NULL
+);
+
+CREATE TABLE posts_comments (
   id BLOB PRIMARY KEY DEFAULT (LOWER(HEX(RANDOMBLOB(16)))),
   text TEXT NOT NULL,
-  likes INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
   updated_at INTEGER,
   post_id BLOB REFERENCES posts ON DELETE CASCADE,
   user_id BLOB REFERENCES users ON DELETE CASCADE
+);
+
+CREATE TABLE posts_comments_likes (
+  posts_comment_id BLOB REFERENCES post_comment ON DELETE CASCADE,
+  user_id BLOB REFERENCES users ON DELETE CASCADE,
+  type BOOLEAN NOT NULL
 );
 
 CREATE TABLE tags (
@@ -63,9 +80,9 @@ CREATE TRIGGER posts_updated_at_trigger AFTER UPDATE ON posts
     WHERE id = old.id;
   END;
 
-CREATE TRIGGER post_comments_updated_at_trigger AFTER UPDATE ON post_comments
+CREATE TRIGGER posts_comments_updated_at_trigger AFTER UPDATE ON posts_comments
   BEGIN
-    UPDATE post_comments
+    UPDATE posts_comments
     SET updated_at = UNIXEPOCH('now')
     WHERE id = old.id;
   END;
@@ -73,5 +90,6 @@ CREATE TRIGGER post_comments_updated_at_trigger AFTER UPDATE ON post_comments
 CREATE UNIQUE INDEX idx_username ON users (username);
 CREATE UNIQUE INDEX idx_posts_title ON posts (title);
 CREATE UNIQUE INDEX idx_posts_unlisted_user_id ON posts (unlisted, user_id);
+CREATE UNIQUE INDEX idx_posts_comments_user_id_text ON posts_comments (user_id, text);
 
 END;
