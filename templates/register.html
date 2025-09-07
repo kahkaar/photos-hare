@@ -5,18 +5,18 @@
 {% block content %}
 <h2>Create a new account</h2>
 
-<form action="/create" method="post">
+<form action="/api/new_user" method="post">
   <p>
     <label for="username">Username</label>
     <input type="text" name="username" id="username" />
   </p>
   <p>
-    <label for="password1">Password</label>
-    <input type="password" name="password1" id="password1" />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" />
   </p>
   <p>
-    <label for="password2">Repeat Password</label>
-    <input type="password" name="password2" id="password2" />
+    <label for="password1">Repeat Password</label>
+    <input type="password" name="password1" id="password1" />
   </p>
   <input type="submit" value="Create" />
 </form>

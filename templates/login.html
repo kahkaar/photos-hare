@@ -5,14 +5,14 @@
 {% block content %}
 <h2>Log in with an account</h2>
 
-<form action="/login" method="post">
+<form action="/api/login" method="post">
   <p>
     <label for="username">Username</label>
-    <input type="text" name="username" id="username" />
+    <input type="text" name="username" id="username" required />
   </p>
   <p>
     <label for="password">Password</label>
-    <input type="password" name="password" id="password" />
+    <input type="password" name="password" id="password" required />
   </p>
   <input type="submit" value="Log in" />
 </form>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg" href="/static/images/favicon.svg">
+  <!-- <link rel="icon" type="image/svg" href="/static/images/favicon.svg"> -->
   <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
   <link rel="stylesheet" href="/static/style.css">
   <title>{% block title %}{% endblock %}</title>
@@ -13,16 +13,20 @@
 <body>
   <div id="app">
     <header>
+      <h1>Photos Hare</h1>
       <div>
-        <h1>Photos Hare</h1>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
       </div>
-      <div><a href="#" target="_blank" rel="noreferrer">#</a></div>
     </header>
-    <div class="root-container">
+    <div class="root-content-container">
       {% block content %}{% endblock %}
     </div>
     <footer>
-      <div><a href="https://example.com" target="_blank" rel="noreferrer">Example</a></div>
+      <a href="https://studies.helsinki.fi/kurssit/opintojakso/otm-f15d8b61-6e3e-47d2-8191-43a92d7d8607/TKT20019?cpId=hy-lv-76"
+        target="_blank" rel="noreferrer">Tietokannat ja web-ohjelmointi &#x2013; TKT20019</a>
+      <a href="https://github.com/kahkaar/photos-hare" target="_blank" rel="noreferrer">Repository</a>
     </footer>
   </div>
 </body>
