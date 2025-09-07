@@ -16,9 +16,15 @@
       <h1>Photos Hare</h1>
       <div>
         <a href="/">Home</a>
+        {% if session.username %}
+        <span>Logged in as <i>{{ session.display_name }}</i> &#x2013;</span>
+        <a href="/logout">Logout</a>
+        {% else %}
         <a href="/login">Login</a>
         <a href="/register">Register</a>
+        {% endif %}
       </div>
+
     </header>
     <div class="root-content-container">
       {% block content %}{% endblock %}

@@ -5,7 +5,10 @@ from flask import g
 
 def get_connection():
     con = sqlite3.connect("database.db")
-    con.execute("PRAGMA foreign_keys = ON")
+    cur = con.cursor()
+    cur.execute("PRAGMA foreign_keys = ON")
+    cur.execute("PRAGMA encoding = 'UTF-8'")
+    con.commit()
     con.row_factory = sqlite3.Row
     return con
 
