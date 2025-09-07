@@ -22,6 +22,7 @@ CREATE TABLE posts (
   description TEXT,
   image_path TEXT NOT NULL, -- Store images inside a directory, instead of the database itself.
   unlisted BOOLEAN NOT NULL DEFAULT FALSE,
+  likes INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
   updated_at INTEGER,
   user_id BLOB REFERENCES users ON DELETE CASCADE
