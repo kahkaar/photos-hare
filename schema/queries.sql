@@ -1,0 +1,180 @@
+-- database: ../database.db
+-- Queries I might use later on.
+-- SELECT title, created_at FROM posts;
+-- UPDATE posts
+-- SET title = 'UPDATED TITLE'
+-- WHERE id = 3;
+-- select id from users;
+-- select * from posts;
+-- select title, created_at from posts where unlisted = FALSE and user_id = (select id from users where username = 'root') order by created_at DESC;
+-- selecting posts for user page.
+-- SELECT
+--   u.id as user_id,
+--   u.username,
+--   u.display_name,
+--   p.id as post_id,
+--   p.title,
+--   p.created_at,
+--   p.updated_at,
+--   p.unlisted,
+--   SUM(
+--     CASE
+--       WHEN pl.type = TRUE THEN 1
+--       WHEN pl.type = FALSE THEN -1
+--       ELSE 0
+--     END
+--   ) AS likes
+-- FROM
+--   users u
+--   JOIN posts p ON u.id = p.user_id
+--   LEFT JOIN posts_likes pl ON p.id = pl.post_id
+-- WHERE
+--   p.unlisted = FALSE
+--   AND u.id = LOWER(
+--     (
+--       select
+--         id
+--       from
+--         users
+--       where
+--         username = 'root'
+--     )
+--   )
+-- GROUP BY
+--   p.id;
+-- SELECT
+--   p.id AS post_id,
+--   p.title,
+--   p.path,
+--   p.created_at,
+--   p.updated_at,
+--   u.id,
+--   u.display_name
+-- FROM
+--   posts AS p
+--   JOIN users AS u ON p.user_id = u.id
+-- WHERE
+--   unlisted = FALSE
+-- GROUP BY
+--   p.id;
+-- SELECT
+--   p.id AS post_id,
+--   p.title,
+--   p.description,
+--   p.filename,
+--   p.created_at AS post_created_at,
+--   p.updated_at AS post_updated_at,
+--   p.user_id,
+--   u.display_name,
+--   SUM(
+--     CASE
+--       WHEN pl.type = TRUE THEN 1
+--       WHEN pl.type = FALSE THEN -1
+--       ELSE 0
+--     END
+--   ) AS post_likes
+-- FROM
+--   posts AS p
+--   LEFT JOIN users AS u ON u.id = p.user_id
+--   LEFT JOIN posts_likes AS pl ON pl.post_id = p.id
+-- WHERE
+--   p.id = '3ec08f0ec585096ff8339624688834b9';
+-- SELECT
+--   p.id AS post_id,
+--   p.title,
+--   p.created_at,
+--   p.updated_at,
+--   SUM(
+--     CASE
+--       WHEN pl.type = TRUE THEN 1
+--       WHEN pl.type = FALSE THEN -1
+--       ELSE 0
+--     END
+--   ) AS likes
+-- FROM
+--   posts AS p
+--   LEFT JOIN posts_likes AS pl ON p.id = pl.post_id
+-- WHERE
+--   p.unlisted = FALSE
+--   AND p.user_id = LOWER(
+--     (
+--       select
+--         id
+--       from
+--         users
+--       where
+--         username = 'root'
+--     )
+--   )
+-- GROUP BY
+--   p.id;
+-- SELECT
+--   p.id AS post_id,
+--   p.title,
+--   p.created_at,
+--   p.updated_at,
+--   p.unlisted,
+--   SUM(
+--     CASE
+--       WHEN pl.type = TRUE THEN 1
+--       WHEN pl.type = FALSE THEN -1
+--       ELSE 0
+--     END
+--   ) AS likes
+-- FROM
+--   users u
+--   JOIN posts p ON u.id = p.user_id
+--   LEFT JOIN posts_likes pl ON p.id = pl.post_id
+-- WHERE
+--   p.unlisted = FALSE
+--   AND u.id = LOWER(
+--     (
+--       select
+--         id
+--       from
+--         users
+--       where
+--         username = 'root'
+--     )
+--   )
+-- GROUP BY
+--   p.id;
+-- SELECT
+--   p.id,
+--   p.title,
+--   p.filename,
+--   p.created_at,
+--   p.updated_at,
+--   SUM(
+--     CASE
+--       WHEN pl.type = TRUE THEN 1
+--       WHEN pl.type = FALSE THEN -1
+--       ELSE 0
+--     END
+--   ) AS likes
+-- FROM
+--   posts AS p
+--   LEFT JOIN users AS u ON u.id = p.user_id
+--   LEFT JOIN posts_likes AS pl ON p.id = pl.post_id
+-- WHERE
+--   p.unlisted = FALSE
+--   AND u.username = LOWER(?)
+-- GROUP BY
+--   p.id;
+-- SELECT
+--   id,
+--   username,
+--   display_name
+-- FROM
+--   users
+-- WHERE
+--   ROWID = 8
+-- INSERT INTO
+--   users (username, display_name, password_hash)
+-- VALUES
+--   (LOWER(?), ?, ?)
+
+-- INSERT INTO
+--   posts (title, description, filename, unlisted, user_id)
+-- VALUES
+--   (?, ?, ?, ?, LOWER(?))

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<h2>Log in with an account</h2>
+
+<form action="/api/user/login" method="post">
+  <p>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" pattern="^[\w]{4,24}+$" minlength="4" maxlength="24" autofocus
+      required />
+  </p>
+  <p>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$"
+      minlength="8" maxlength="255" required />
+  </p>
+  <input type="submit" value="Log in" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" required />
+</form>
+{% endblock %}
