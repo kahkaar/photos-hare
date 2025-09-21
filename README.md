@@ -56,7 +56,9 @@ sqlite3 database.db < db/schema.sql
 sqlite3 database.db < db/init.sql
 ```
 
-4. Start the server using Flask
+4. Create a secret key in `config.py` (see `config.template.py`)
+
+5. Start the server using Flask
 ```bash
 flask run
 ```
@@ -80,7 +82,9 @@ sqlite3 database.db < db/schema.sql
 sqlite3 database.db < db/dummy.sql
 ```
 
-4. Start the server in **debug mode**
+4. Create a secret key in `config.py` (see `config.template.py`)
+
+5. Start the server in **debug mode**
 ```bash
 flask run --debug
 ```
