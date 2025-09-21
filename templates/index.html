@@ -7,7 +7,18 @@
 <p>Posts</p>
 <ul>
   {% for post in posts %}
-  <li>{{ post.id }} &#x2013; {{ post.title }}</li>
+  <li>
+    <a href="/post/{{ post.id }}">
+      {{ post.id }} &#x2013; {{ post.title }}
+    </a>
+    &#x2013;
+    <a href="/user/{{ post.user_id }}">
+      {{ post.display_name }} &#x2013; {{ post.user_id }}
+    </a>
+    <a href="/post/{{ post.id }}">
+      <img class="wall" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+    </a>
+  </li>
   {% endfor %}
 </ul>
 <p>Users</p>

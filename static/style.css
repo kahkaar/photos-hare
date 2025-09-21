@@ -3,3 +3,19 @@
   padding: 0;
   font-family: 'Courier New', Courier, monospace;
 }
+
+img.wall {
+  width: 320px;
+  height: 360px;
+  object-fit: cover;
+}
+
+img.list {
+  width: 320px;
+  height: 360px;
+  object-fit: cover;
+}
+
+img.post {
+  object-fit: contain;
+}

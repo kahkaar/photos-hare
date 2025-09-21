@@ -30,3 +30,27 @@ def query(sql, params=[]):
     result = con.execute(sql, params).fetchall()
     con.close()
     return result
+
+
+def execute_many(sql_params):
+    con = get_connection()
+    cur = con.cursor()
+
+    for sql, params in sql_params:
+        cur.execute(sql, params)
+
+    con.commit()
+    con.close()
+
+
+def queries_get_last(execute_sql_params, query_sql):
+    con = get_connection()
+    cur = con.cursor()
+    for sql, params in execute_sql_params:
+        cur.execute(sql, params)
+
+    result = cur.execute(query_sql).fetchall()
+    con.commit()
+    con.close()
+
+    return result

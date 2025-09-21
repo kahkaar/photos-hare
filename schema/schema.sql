@@ -27,7 +27,7 @@ CREATE TABLE posts (
   id BLOB PRIMARY KEY DEFAULT (LOWER(HEX(RANDOMBLOB(16)))),
   title TEXT,
   description TEXT,
-  image_path TEXT NOT NULL, -- Store images inside a directory, instead of the database-file itself.
+  filename TEXT, -- Store images inside a directory, instead of the database-file itself.
   unlisted BOOLEAN NOT NULL DEFAULT FALSE,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
   updated_at INTEGER,
@@ -88,8 +88,8 @@ CREATE TRIGGER posts_comments_updated_at_trigger AFTER UPDATE ON posts_comments
   END;
 
 CREATE UNIQUE INDEX idx_username ON users (username);
-CREATE UNIQUE INDEX idx_posts_title ON posts (title);
-CREATE UNIQUE INDEX idx_posts_unlisted_user_id ON posts (unlisted, user_id);
-CREATE UNIQUE INDEX idx_posts_comments_user_id_text ON posts_comments (user_id, text);
+CREATE INDEX idx_posts_title ON posts (title);
+CREATE INDEX idx_posts_unlisted_user_id ON posts (unlisted, user_id);
+CREATE INDEX idx_posts_comments_user_id_text ON posts_comments (user_id, text);
 
 END;

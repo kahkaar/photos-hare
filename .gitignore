@@ -4,6 +4,11 @@
 # Config file
 config.py
 
+# Uploads
+uploads/*
+!uploads/_dummy.jpg
+!uploads/_dummy.jpg.license
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

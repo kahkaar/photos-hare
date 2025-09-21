@@ -12,19 +12,28 @@
 
 <body>
   <div id="app">
+    {% if session.alert %}
+    <div>
+      <p>{{ session.alert }}</p>
+      <form action="/alert/clear" method="post">
+        <input type="submit" value="&#x1f5d9;" />
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+      </form>
+    </div>
+    {% endif %}
     <header>
       <h1>Photos Hare</h1>
       <div>
         <a href="/">Home</a>
         {% if session.username %}
-        <span>Logged in as <i>{{ session.display_name }}</i> &#x2013;</span>
+        <a href="/post">Post</a>
+        <span>Logged in as <i><a href="/user/me">{{ session.display_name }}</a></i> &#x2013;</span>
         <a href="/logout">Logout</a>
         {% else %}
         <a href="/login">Login</a>
         <a href="/register">Register</a>
         {% endif %}
       </div>
-
     </header>
     <div class="root-content-container">
       {% block content %}{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Photos Hare{% endblock %}
+
+{% block content %}
+
+{% if user %}
+<h2 class="card-heading">{{ user.display_name }}</h2>
+{% if posts %}
+<ul>
+  {% for post in posts %}
+  <li>
+    <a href="/post/{{ post.id }}">
+      {{ post.title }} &#x2013; {{ post.created_at }}
+      {% if post.updated_at %}
+      (edited {{ post.updated_at }})
+      {% endif %}
+      <img class="list" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>no posts found</p>
+{% endif %}
+{% else %}
+<h2>user not found</h2>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}Photos Hare{% if post.title %} &#x2013; {{ post.title }}{% endif %}{% endblock %}
+
+{% block content %}
+
+{% if post %}
+<h2>{{ post.title }}</h2>
+<p>Created at {{ post.created_at }}{% if post.updated_at %}({{ post.updated_at }}){% endif %}</p>
+<a href="/user/{{ post.user_id }}">{{ post.display_name }}</a>
+<p>{{ post.description }}</p>
+<img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+{% else %}
+<p>post not found</p>
+{% endif %}
+
+{% endblock %}

@@ -5,20 +5,27 @@
 ## Features
 
 ### Initial Features
-- [ ] Create user
-  - [ ] Log in as user
+- [ ] User
+  - [X] Create user
+  - [X] Log in as user
+  - [ ] Update user settings (change password)
 
-- [ ] Share an image with a title, a description and tags
-  - [ ] Allow unlisting of posts (does not show on main page or profile page)
-  - [ ] Allow editing of posts (title, description, tags)
+- [ ] Posting
+  - [X] Share an image
+    - [X] With a title
+    - [X] With a description
+    - [ ] With tags
+  - [X] Allow unlisting of posts (does not show on main page or profile page)
+  - [ ] Allow editing of posts (title, description, unlisted, tags)
   - [ ] Allow removing of posts
   - [ ] Allow liking of posts
 
-- [ ] Create comments on posts
+- [ ] Comments
+  - [ ] Create comments on posts
   - [ ] Allow editing and removing of comments
   - [ ] Allow liking of comments
 
-- More features coming soon™️
+- More features coming™️
 
 ## Running the Application
 
@@ -50,7 +57,7 @@ sqlite3 database.db < db/init.sql
 flask run
 ```
 
-### Developing the Application
+## Developing the Application
 
 1. Create a virtual environment
 ```bash
