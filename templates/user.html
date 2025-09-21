@@ -15,7 +15,7 @@
       {% if post.updated_at %}
       (edited {{ post.updated_at }})
       {% endif %}
-      <img class="list" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+      <img class="list" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ user.display_name }}'">
     </a>
   </li>
   {% endfor %}

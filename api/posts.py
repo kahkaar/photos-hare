@@ -4,6 +4,7 @@ import db
 
 __all__ = [
     "create",
+    "find",
     "get",
     "get_all",
     "get_all_of",
@@ -25,6 +26,7 @@ FROM
 WHERE
   unlisted = FALSE
 GROUP BY
+  p.created_at,
   p.id"""
 
 GET_POSTS_OF_USER_ID = """SELECT
@@ -47,6 +49,7 @@ WHERE
   p.unlisted = FALSE
   AND p.user_id = LOWER(?)
 GROUP BY
+  p.created_at,
   p.id"""
 
 GET_POSTS_OF_USERNAME = """SELECT
@@ -70,6 +73,7 @@ WHERE
   p.unlisted = FALSE
   AND u.username = LOWER(?)
 GROUP BY
+  p.created_at,
   p.id"""
 
 GET_POST_BY_ROWID = """SELECT
@@ -168,6 +172,7 @@ FROM
 WHERE
   p.user_id = LOWER(?)
 GROUP BY
+  p.created_at,
   p.id"""
 
 CREATE_POST = """INSERT INTO
@@ -181,6 +186,24 @@ SET
   filename = ?
 WHERE
   id = LOWER(?)"""
+
+GET_POSTS_BY_TITLE = """SELECT
+  p.id,
+  p.title,
+  p.filename,
+  p.created_at,
+  p.updated_at,
+  u.id AS user_id,
+  u.display_name
+FROM
+  posts AS p
+  JOIN users AS u ON p.user_id = u.id
+WHERE
+  unlisted = FALSE
+  AND p.title LIKE ?
+GROUP BY
+  p.created_at,
+  p.id"""
 
 
 def get_all():
@@ -223,3 +246,8 @@ def create(title, description="", unlisted=False):
     # result = db.query(GET_POST_BY_ROWID, [g.last_insert_id])
 
     return result[0] if result and "id" in result[0].keys() else {}
+
+
+def find(query):
+    result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%"])
+    return result if result and "id" in result[0].keys() else []

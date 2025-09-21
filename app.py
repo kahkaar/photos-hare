@@ -45,8 +45,12 @@ def favicon():
 def index():
     csrf.init()
 
-    posts = api.posts.get_all()
+    query = request.args.get("q", "", str)
+    session["query"] = query
+
+    posts = api.posts.find(query) if query else api.posts.get_all()
     users = api.users.get_all()
+
     return render_template("index.html", posts=posts, users=users)
 
 
@@ -75,23 +79,23 @@ def login():
 
 @app.route("/api/user/login", methods=["POST"])
 def login_user():
-    username = request.form["username"].strip().lower()
-    password = request.form["password"].strip()
+    username = request.form.get("username", "", str).strip().lower()
+    password = request.form.get("password", "", str).strip()
 
     csrf.validate()
 
-    if not helpers.is_username_valid(username):
-        alert.set("ERROR: Username is not valid")
+    if not username or not helpers.is_username_valid(username):
+        alert.set("ERROR: username is not valid")
         return redirect("/login")
 
-    if not helpers.is_password_valid(password):
-        alert.set("ERROR: Password is not valid")
+    if not password or not helpers.is_password_valid(password):
+        alert.set("ERROR: password is not valid")
         return redirect("/login")
 
     result = api.users.get_login(username)
 
     if not result:
-        alert.set(f"ERROR: wrong username or password {result}")
+        alert.set("ERROR: wrong username or password")
         return redirect("/login")
 
     user_id, username, display_name, password_hash = result
@@ -125,10 +129,10 @@ def register():
 def new_user():
     csrf.validate()
 
-    display_name = request.form["username"].strip()
+    display_name = request.form.get("username", "", str).strip()
     username = display_name.lower()
-    password = request.form["password"].strip()
-    password1 = request.form["password1"].strip()
+    password = request.form.get("password", "", str).strip()
+    password1 = request.form.get("password1", "", str).strip()
 
     if not helpers.is_username_valid(username):
         alert.set("ERROR: username is not valid")
@@ -209,37 +213,26 @@ def new_post():
     csrf.validate()
     sesh.require_login()
 
-    title = ""
-    if "title" in request.form:
-        title = request.form["title"].strip()
-
-    description = ""
-    if "description" in request.form:
-        description = request.form["description"].strip()
-
-    unlisted = False
-    if "unlisted" in request.form:
-        unlisted = bool(request.form["unlisted"])
-
-    file = None
-    if "file" in request.files:
-        file = request.files["file"]
+    title = request.form.get("title", "", str).strip()
+    description = request.form.get("description", "", str).strip()
+    unlisted = bool(request.form.get("unlisted", False, bool))
+    file = request.files.get("file", None)
 
     if not helpers.is_title_valid(title):
-        alert.set("ERROR: Title is not valid")
+        alert.set("ERROR: title is not valid")
         return redirect("/post")
 
     if not helpers.is_description_valid(description):
-        alert.set("ERROR: Description is not valid")
+        alert.set("ERROR: description is not valid")
         return redirect("/post")
 
     if not file:
-        alert.set("ERROR: File not found")
+        alert.set("ERROR: file not found")
         return redirect("/post")
 
-    if not str(file.filename).endswith((".jpg", ".jpeg")):
-        alert.set("ERROR: File extension is not valid, must be (.jpg, .jpeg)")
-        return redirect("/post")
+    # if not str(file.filename).endswith((".jpg", ".jpeg")):
+    #     alert.set("ERROR: file extension is not valid, must be (.jpg, .jpeg)")
+    #     return redirect("/post")
 
     data = file.read()
 
@@ -247,18 +240,18 @@ def new_post():
     max_size_bytes = max_size_kb * 1024
 
     if len(data) > max_size_bytes:
-        alert.set(f"ERROR: File size too big (max {max_size_bytes} bytes)")
+        alert.set(f"ERROR: file size too big (max {max_size_bytes} bytes)")
         return redirect("/post")
 
     if not img.validate_jpg_signature(data):
-        alert.set("ERROR: File is not valid, must be (.jpg, .jpeg)")
+        alert.set("ERROR: file is not valid, must be (.jpg, .jpeg)")
         return redirect("/post")
 
     result = api.posts.create(title, description, unlisted)
     post_id = None if not result and "id" not in result else result["id"]
 
     if not post_id:
-        alert.set("ERROR: Post could not be returned")
+        alert.set("ERROR: post could not be returned")
         return redirect("/post")
 
     img.save_jpg(data, post_id)
