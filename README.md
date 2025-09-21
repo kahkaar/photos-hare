@@ -25,6 +25,10 @@
   - [ ] Allow editing and removing of comments
   - [ ] Allow liking of comments
 
+- [ ] Searching
+  - [X] Posts
+  - [ ] Comments
+
 - More features coming™️
 
 ## Running the Application
