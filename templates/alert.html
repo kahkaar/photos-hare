@@ -1,0 +1,9 @@
+{% if session.alert %}
+<div>
+  <p>{{ session.alert }}</p>
+  <form action="/alert/clear" method="post">
+    <input type="submit" value="&#x1f5d9;" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  </form>
+</div>
+{% endif %}

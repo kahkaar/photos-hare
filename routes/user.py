@@ -212,12 +212,11 @@ def update():
         result = api.users.update(user_id, new_display_name, new_password_hash)
         sesh.set(result["id"], result["username"], result["display_name"])
 
+        message = "Display name and password changed"
         if display_name_changed and not password_changed:
             message = "Display name changed"
         elif not display_name_changed and password_changed:
             message = "Password changed"
-        else:
-            message = "Display name and password changed"
 
     alert.set(message)
     return redirect("/user/me")

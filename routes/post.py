@@ -142,6 +142,7 @@ def update(post_id):
     if desc_changed or unlisted_changed:
         api.posts.update(post_id, new_desc, new_unlisted)
 
+        message = f"Edited description and listing status ({'unlisted' if new_unlisted else 'listed'})"
         if desc_changed and not unlisted_changed:
             message = "Post has a new description"
         elif not desc_changed and unlisted_changed:
@@ -150,8 +151,6 @@ def update(post_id):
                 if new_unlisted
                 else "Post is now publicly listed"
             )
-        else:
-            message = f"Edited description and listing status ({'unlisted' if new_unlisted else 'listed'})"
 
     alert.set(message)
     return redirect(f"/post/{post_id}")
