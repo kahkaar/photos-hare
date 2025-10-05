@@ -4,11 +4,10 @@
 
 ## Features
 
-### Initial Features
-- [ ] User
+- [X] User
   - [X] Create user
   - [X] Log in as user
-  - [ ] Update user settings (change password)
+  - [X] Update user settings (change password, and display name capitalization)
 
 - [ ] Posting
   - [X] Share an image
@@ -17,7 +16,7 @@
     - [ ] With tags
   - [X] Allow unlisting of posts (does not show on main page or profile page)
   - [ ] Allow editing of posts (title, description, unlisted, tags)
-  - [ ] Allow removing of posts
+  - [X] Allow removing of posts
   - [ ] Allow liking of posts
 
 - [ ] Comments
@@ -29,7 +28,6 @@
   - [X] Posts
   - [ ] Comments
 
-- More features coming™️
 
 ## Running the Application
 
@@ -44,16 +42,10 @@ source .venv/bin/activate
 pip install Flask
 ```
 
-**OR**
-
+3. Initialize the database
 ```bash
-pip install -r requirements.txt
-```
-
-3. Initialize database
-```bash
-sqlite3 database.db < db/schema.sql
-sqlite3 database.db < db/init.sql
+sqlite3 database.db < schema/schema.sql
+sqlite3 database.db < schema/init.sql
 ```
 
 4. Create a secret key in `config.py` (see `config.template.py`)
@@ -76,13 +68,13 @@ source .venv/bin/activate
 pip install -r dev.requirements.txt
 ```
 
-3. Initialize database
+3. Initialize the database
 ```bash
-sqlite3 database.db < db/schema.sql
-sqlite3 database.db < db/dummy.sql
+sqlite3 database.db < schema/schema.sql
+sqlite3 database.db < schema/dummy.sql
 ```
 
-4. Create a secret key in `config.py` (see `config.template.py`)
+4. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
 
 5. Start the server in **debug mode**
 ```bash

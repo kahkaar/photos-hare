@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+<h2>Edit {{ post.title }}</h2>
+<p>Created at {{ post.created_at }}</p>
+{# TODO: Fix post updating when creating (not important).
+<p>Created at {{ post.created_at }}{% if post.updated_at %}({{ post.updated_at }}){% endif %}</p>
+#}
+<img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+<form action="/post/{{ post.id }}/edit" method="post">
+  <p>
+    <label for="description">Description</label>
+    <textarea name="description" id="description" maxlength="255">{{ post.description }}</textarea>
+  </p>
+  <p>
+    <label for="unlisted">Unlisted</label>
+    {% if post.unlisted %}
+    <input type="checkbox" name="unlisted" id="unlisted" checked />
+    {% else %}
+    <input type="checkbox" name="unlisted" id="unlisted" />
+    {% endif %}
+  </p>
+  <input type="submit" value="Edit" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+</form>
+<a href="/post/{{ post.id }}">Cancel</a>
+<a href="/post/{{ post.id }}/delete">Delete</a>
+{% endblock %}

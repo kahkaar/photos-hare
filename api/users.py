@@ -1,8 +1,14 @@
-from flask import g
-
 import db
 
-__all__ = ["create", "get", "get_login", "get_all"]
+from . import helpers
+
+__all__ = [
+    "create",
+    "get",
+    "get_all",
+    "get_login",
+    "update",
+]
 
 
 GET_USERS = """SELECT
@@ -127,27 +133,12 @@ CREATE_USER = """INSERT INTO
 VALUES
   (LOWER(?), ?, ?)"""
 
-
-def get_all():
-    return db.query(GET_USERS)
-
-
-def get(user):
-    result = db.query(
-        GET_USER_BY_USER_ID if len(user) == 32 else GET_USER_BY_USERNAME,
-        [user],
-    )
-
-    return result[0] if result and "id" in result[0].keys() else {}
-
-
-def get_login(user):
-    result = db.query(
-        GET_LOGIN_BY_USER_ID if len(user) == 32 else GET_LOGIN_BY_USERNAME,
-        [user],
-    )
-
-    return result[0] if result and "id" in result[0].keys() else {}
+UPDATE = """UPDATE users
+SET
+  display_name = ?,
+  password_hash = ?
+WHERE
+  id = LOWER(?)"""
 
 
 def create(name, password_hash):
@@ -158,10 +149,58 @@ def create(name, password_hash):
         [
             [CREATE_USER, [username, display_name, password_hash]],
         ],
-        GET_LAST_INSERTED_USER,
+        [GET_LAST_INSERTED_USER],
     )
 
-    # db.execute(CREATE_USER, [username, display_name, password_hash])
-    # result = db.query(GET_USER_BY_ROWID, [g.last_insert_id])
+    return helpers.validate_object(result)
 
-    return result[0] if result and "id" in result[0].keys() else {}
+
+def get(user):
+    result = db.query(
+        GET_USER_BY_USER_ID if len(user) == 32 else GET_USER_BY_USERNAME,
+        [user],
+    )
+
+    return helpers.validate_object(result)
+
+
+def get_all():
+    result = db.query(GET_USERS)
+    return helpers.validate_objects(result)
+
+
+def get_login(user):
+    result = db.query(
+        GET_LOGIN_BY_USER_ID if len(user) == 32 else GET_LOGIN_BY_USERNAME,
+        [user],
+    )
+
+    return helpers.validate_object(result)
+
+
+def update(user_id, display_name, password_hash):
+    result = db.queries_get_last(
+        [[UPDATE, [display_name, password_hash, user_id]]],
+        [GET_USER_BY_USER_ID, [user_id]],
+    )
+    return helpers.validate_object(result)
+
+
+def _get_by_user_id(user_id):
+    result = db.query(GET_USER_BY_USER_ID, [user_id])
+    return helpers.validate_object(result)
+
+
+def _get_by_username(username):
+    result = db.query(GET_USER_BY_USERNAME, [username])
+    return helpers.validate_object(result)
+
+
+def _get_login_by_user_id(user_id):
+    result = db.query(GET_LOGIN_BY_USER_ID, [user_id])
+    return helpers.validate_object(result)
+
+
+def _get_login_by_username(username):
+    result = db.query(GET_LOGIN_BY_USERNAME, [username])
+    return helpers.validate_object(result)

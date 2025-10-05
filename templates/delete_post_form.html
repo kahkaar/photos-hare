@@ -1,23 +1,22 @@
 {% extends "layout.html" %}
 
-{% block title %}Photos Hare{% if post.title %} &#x2013; {{ post.title }}{% endif %}{% endblock %}
+{% block title %}Delete Post{% endblock %}
 
 {% block content %}
-
-{% if post %}
-<h2>{{ post.title }}</h2>
-{% if post.user_id == session.user_id %}
-<a href="/post/{{ post.id }}/edit">Edit</a>
-{% endif %}
+<h2>Delete {{ post.title }}</h2>
 <p>Created at {{ post.created_at }}</p>
 {# TODO: Fix post updating when creating (not important).
 <p>Created at {{ post.created_at }}{% if post.updated_at %}({{ post.updated_at }}){% endif %}</p>
 #}
-<a href="/user/{{ post.user_id }}">{{ post.display_name }}</a>
 <p>{{ post.description }}</p>
 <img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
-{% else %}
-<p>post not found</p>
-{% endif %}
 
+<form action="/post/{{ post.id }}/delete" method="post">
+  <p>Are you sure you want to delete {{ post.title }}?</p>
+
+  <input type="submit" value="Yes" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+</form>
+
+<a href="/post/{{ post.id }}">Cancel</a>
 {% endblock %}

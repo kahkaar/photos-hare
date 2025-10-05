@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+<h2>Edit {{ user.name }}</h2>
+<p>Created at {{ user.created_at }}{% if user.updated_at %}({{ user.updated_at }}){% endif %}</p>
+
+<form action="/user/me/edit" method="post">
+  <p>Change the capitalization of your username</p>
+  <p>
+    <label for="display_name">Display Name</label>
+    <input type="text" name="display_name" id="display_name" pattern="^[\w]{4,24}+$" minlength="4" maxlength="24"
+      placeholder="{{ user.display_name }}" />
+  </p>
+  <p>Allowed characters a-zA-Z0-9_!#$%&()*+-.?</p>
+  <p>
+    <label for="password">Old Password</label>
+    <input type="password" name="password" id="password" pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$"
+      minlength="8" maxlength="255" />
+  </p>
+  <p>
+    <label for="new_password">New Password</label>
+    <input type="password" name="new_password" id="new_password" pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$"
+      minlength="8" maxlength="255" />
+  </p>
+  <p>
+    <label for="new_password1">Repeat New Password</label>
+    <input type="password" name="new_password1" id="new_password1"
+      pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$" minlength="8" maxlength="255" />
+  </p>
+  <input type="submit" value="Update" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+</form>
+<a href="/user/me">Cancel</a>
+{#
+<a href="/user/me/delete">Delete</a>
+#}
+{% endblock %}

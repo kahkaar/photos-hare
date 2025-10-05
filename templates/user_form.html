@@ -5,7 +5,7 @@
 {% block content %}
 <h2>Create a new account</h2>
 
-<form action="/api/user/create" method="post">
+<form action="/register" method="post">
   <p>
     <label for="username">Username</label>
     <input type="text" name="username" id="username" pattern="^[\w]{4,24}+$" minlength="4" maxlength="24" required

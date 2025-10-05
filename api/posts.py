@@ -2,6 +2,8 @@ from flask import session
 
 import db
 
+from . import helpers
+
 __all__ = [
     "create",
     "find",
@@ -9,8 +11,10 @@ __all__ = [
     "get_all",
     "get_all_of",
     "get_unlisted_of",
+    "update",
     "update_filename",
 ]
+
 
 GET_POSTS = """SELECT
   p.id,
@@ -134,6 +138,7 @@ GET_POST_BY_POST_ID = """SELECT
   p.title,
   p.description,
   p.filename,
+  p.unlisted,
   p.created_at,
   p.updated_at,
   p.user_id AS user_id,
@@ -180,10 +185,32 @@ CREATE_POST = """INSERT INTO
 VALUES
   (?, ?, ?, LOWER(?))"""
 
-UPDATE_FILENAME = """UPDATE
-  posts
+UPDATE = """UPDATE posts
+SET
+  description = ?,
+  unlisted = ?
+WHERE
+  id = LOWER(?)"""
+
+UPDATE_FILENAME = """UPDATE posts
 SET
   filename = ?
+WHERE
+  id = LOWER(?)"""
+
+UPDATE_DESCRIPTION = """UPDATE posts
+SET
+  description = ?
+WHERE
+  id = LOWER(?)"""
+
+UPDATE_UNLISTED = """UPDATE posts
+SET
+  unlisted = ?
+WHERE
+  id = LOWER(?)"""
+
+DELETE = """DELETE FROM posts
 WHERE
   id = LOWER(?)"""
 
@@ -206,17 +233,32 @@ GROUP BY
   p.id"""
 
 
-def get_all():
-    return db.query(GET_POSTS)
+def create(title, description="", unlisted=False):
+    user_id = session["user_id"]
+
+    result = db.queries_get_last(
+        [
+            [CREATE_POST, [title, description, unlisted, user_id]],
+        ],
+        [GET_LAST_INSERTED_POST_ID],
+    )
+
+    return helpers.validate_object(result)
 
 
-def get_unlisted_of(user):
-    return db.query(GET_ALL_POSTS_OF_USER_ID, [user])
+def find(query):
+    result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%"])
+    return helpers.validate_objects(result)
 
 
 def get(post_id):
     result = db.query(GET_POST_BY_POST_ID, [post_id])
-    return result[0] if result and "id" in result[0].keys() else {}
+    return helpers.validate_object(result)
+
+
+def get_all():
+    result = db.query(GET_POSTS)
+    return helpers.validate_objects(result)
 
 
 def get_all_of(user):
@@ -225,29 +267,50 @@ def get_all_of(user):
         [user],
     )
 
-    return result if result and "id" in result[0].keys() else []
+    return helpers.validate_objects(result)
+
+
+def get_unlisted_of(user):
+    result = db.query(GET_ALL_POSTS_OF_USER_ID, [user])
+    return helpers.validate_objects(result)
+
+
+def update(post_id, description, unlisted):
+    result = db.queries_get_last(
+        [
+            [UPDATE, [description, unlisted, post_id]],
+        ],
+        [GET_POST_BY_POST_ID, [post_id]],
+    )
+
+    return helpers.validate_object(result)
+
+
+def update_description(post_id, new_value):
+    result = db.queries_get_last(
+        [
+            [UPDATE_DESCRIPTION, [new_value, post_id]],
+        ],
+        [GET_POST_BY_POST_ID, [post_id]],
+    )
+
+    return helpers.validate_object(result)
+
+
+def update_unlisted(post_id, new_value):
+    result = db.queries_get_last(
+        [
+            [UPDATE_UNLISTED, [new_value, post_id]],
+        ],
+        [GET_POST_BY_POST_ID, [post_id]],
+    )
+
+    return helpers.validate_object(result)
 
 
 def update_filename(post_id, new_value):
     db.execute(UPDATE_FILENAME, [new_value, post_id])
 
 
-def create(title, description="", unlisted=False):
-    user_id = session["user_id"]
-
-    result = db.queries_get_last(
-        [
-            [CREATE_POST, [title, description, unlisted, user_id]],
-        ],
-        GET_LAST_INSERTED_POST_ID,
-    )
-
-    # db.execute(CREATE_POST, [title, description, unlisted, user_id])
-    # result = db.query(GET_POST_BY_ROWID, [g.last_insert_id])
-
-    return result[0] if result and "id" in result[0].keys() else {}
-
-
-def find(query):
-    result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%"])
-    return result if result and "id" in result[0].keys() else []
+def delete(post_id):
+    db.execute(DELETE, [post_id])

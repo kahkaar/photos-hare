@@ -43,13 +43,26 @@ def execute_many(sql_params):
     con.close()
 
 
-def queries_get_last(execute_sql_params, query_sql):
+def _add_empty(items):
+    items.append([])
+
+
+def queries_get_last(execute_sql_params, query_sql_params):
     con = get_connection()
     cur = con.cursor()
-    for sql, params in execute_sql_params:
+    for sql_params in execute_sql_params:
+        if len(sql_params) < 2:
+            _add_empty(sql_params)
+
+        sql, params = sql_params
         cur.execute(sql, params)
 
-    result = cur.execute(query_sql).fetchall()
+    if len(query_sql_params) < 2:
+        _add_empty(query_sql_params)
+
+    sql, params = query_sql_params[:2]
+    result = cur.execute(sql, params).fetchall()
+
     con.commit()
     con.close()
 
