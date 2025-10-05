@@ -38,23 +38,36 @@ FROM
 WHERE
   id = LOWER(?)"""
 
+# TODO: post_count and comment_count not returning correct value
 GET_USER_BY_USERNAME = """SELECT
-  id,
-  username,
-  display_name
+  u.id,
+  u.username,
+  u.display_name,
+  COUNT(DISTINCT p.id) AS post_count,
+  COUNT(DISTINCT pc.id) AS comment_count
 FROM
-  users
+  users AS u
+  LEFT JOIN posts AS p ON p.user_id = u.id
+  LEFT JOIN posts_comments AS pc ON pc.user_id = u.id
 WHERE
-  username = LOWER(?)"""
+  u.username = LOWER(?)
+GROUP BY
+  p.id"""
 
 GET_USER_BY_USER_ID = """SELECT
-  id,
-  username,
-  display_name
+  u.id,
+  u.username,
+  u.display_name,
+  COUNT(DISTINCT p.id) AS post_count,
+  COUNT(DISTINCT pc.id) AS comment_count
 FROM
-  users
+  users AS u
+  LEFT JOIN posts AS p ON p.user_id = u.id
+  LEFT JOIN posts_comments AS pc ON pc.user_id = u.id
 WHERE
-  id = LOWER(?)"""
+  u.id = LOWER(?)
+GROUP BY
+  p.id"""
 
 GET_USER_BY_ROWID = """SELECT
   id,

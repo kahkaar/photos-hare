@@ -187,6 +187,17 @@ def post_view(post_id):
             abort(405)
 
 
+@app.route("/post/<post_id>/comment", methods=["POST"])
+def comment_post(post_id):
+    post_id = post_id.strip().lower()
+
+    match request.method:
+        case "POST":
+            return routes.post.comment(post_id)
+        case _:
+            abort(405)
+
+
 @app.route("/post/<post_id>/delete", methods=["GET", "POST"])
 def delete_post(post_id):
     post_id = post_id.strip().lower()

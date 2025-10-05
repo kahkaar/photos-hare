@@ -21,8 +21,15 @@
   <p>
     <label for="file">Photo</label>
     <input type="file" name="file" id="file" accept="image/jpeg" required />
-    <!-- <input type="file" name="file" id="file" accept="image/png, image/jpeg" required /> -->
   </p>
+  <label for="tags">Choose a tag</label>
+  <select id="tags" name="tags">
+    <option value="">-</option>
+    {% for tag in tags %}
+    <option value="{{ tag.id }}">{{ tag.name }}</option>
+    {% endfor %}
+  </select>
+
   <input type="submit" value="Create" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>

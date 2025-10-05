@@ -15,7 +15,34 @@
 #}
 <a href="/user/{{ post.user_id }}">{{ post.display_name }}</a>
 <p>{{ post.description }}</p>
+<p>Likes: {{ post.likes }}</p>
 <img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+<p>Tag: {{ post.tag }}</p>
+{% if session.user_id %}
+<form action="/post/{{ post.id }}/comment" method="post">
+  <p>
+    <label for="comment">Comment</label>
+    <textarea name="comment" id="comment" maxlength="255" required></textarea>
+  </p>
+  <input type="submit" value="Comment" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+</form>
+{% else %}
+<p>log in to comment</p>
+{% endif %}
+{% if comments %}
+<ul>
+  {% for comment in comments %}
+  <li id="{{ comment.id }}">
+    <a href="/user/{{ comment.user_id }}">{{ comment.display_name }}</a>
+    <p>{{ comment.created_at }}{% if comment.updated_at %}(edited at {{ comment.updated_at }}){% endif %}</p>
+    <p>{{ comment.text }}</p>
+    <p>Likes: {{ comment.likes }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
 {% else %}
 <p>post not found</p>
 {% endif %}

@@ -95,7 +95,7 @@ GET_POST_BY_ROWID = """SELECT
       WHEN pl.type = FALSE THEN -1
       ELSE 0
     END
-  ) AS post_likes
+  ) AS likes
 FROM
   posts AS p
   LEFT JOIN users AS u ON u.id = p.user_id
@@ -118,7 +118,7 @@ GET_LAST_INSERTED_POST = """SELECT
       WHEN pl.type = FALSE THEN -1
       ELSE 0
     END
-  ) AS post_likes
+  ) AS likes
 FROM
   posts AS p
   LEFT JOIN users AS u ON u.id = p.user_id
@@ -143,17 +143,20 @@ GET_POST_BY_POST_ID = """SELECT
   p.updated_at,
   p.user_id AS user_id,
   u.display_name,
+  t.name AS tag,
   SUM(
     CASE
       WHEN pl.type = TRUE THEN 1
       WHEN pl.type = FALSE THEN -1
       ELSE 0
     END
-  ) AS post_likes
+  ) AS likes
 FROM
   posts AS p
   LEFT JOIN users AS u ON u.id = p.user_id
   LEFT JOIN posts_likes AS pl ON pl.post_id = p.id
+  LEFT JOIN posts_tags AS pt ON pt.post_id = p.id
+  LEFT JOIN tags AS t ON t.id = pt.tag_id
 WHERE
   p.id = ?"""
 

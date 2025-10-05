@@ -12,6 +12,7 @@ __all__ = [
     "jpeg",
     "delete_image",
     "get_referrer",
+    "is_comment_valid",
     "is_description_valid",
     "is_password_valid",
     "is_title_valid",
@@ -32,6 +33,10 @@ def delete_image(filename):
 
 def get_referrer():
     return request.args.get("ref", "index", str)
+
+
+def is_comment_valid(input):
+    return 0 <= len(input) <= 255
 
 
 def is_description_valid(input):

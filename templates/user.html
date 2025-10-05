@@ -9,6 +9,8 @@
 {% if user.id == session.user_id %}
 <a href="/user/me/edit">Settings</a>
 {% endif %}
+<p>Posts made {{ user.post_count }}</p>
+<p>Comments made {{ user.comment_count }}</p>
 {% if posts %}
 <ul>
   {% for post in posts %}

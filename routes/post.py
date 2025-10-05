@@ -1,4 +1,10 @@
-from flask import redirect, render_template, request, send_from_directory
+from flask import (
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    session,
+)
 
 import api
 from routes.helpers import alert, csrf, jpeg
@@ -8,6 +14,7 @@ from routes.helpers import to_localtime
 from . import helpers
 
 __all__ = [
+    "comment",
     "create",
     "create_view",
     "delete",
@@ -17,6 +24,24 @@ __all__ = [
 ]
 
 
+def comment(post_id):
+    csrf.validate()
+    if not sesh.validate():
+        return redirect(f"/post/{post_id}")
+
+    comment = request.form.get("comment", "", str).strip()
+
+    if not helpers.is_comment_valid(comment):
+        alert.set("Comment is either too short or too long")
+        return redirect(f"/post/{post_id}")
+
+    user_id = session["user_id"]
+
+    comment = api.comments.create(comment, post_id, user_id)
+
+    return redirect(f"/post/{post_id}#{comment['id']}")
+
+
 def create():
     csrf.validate()
     sesh.require_login()
@@ -24,6 +49,7 @@ def create():
     title = request.form.get("title", "", str).strip()
     description = request.form.get("description", "", str).strip()
     unlisted = bool(request.form.get("unlisted", False, bool))
+    tag = request.form.get("tags", "", str).strip().lower()
     file = request.files.get("file", None)
 
     if not helpers.is_title_valid(title):
@@ -52,12 +78,14 @@ def create():
         return redirect("/post")
 
     result = api.posts.create(title, description, unlisted)
-    # post_id = None if not result and "id" not in result else result["id"]
     post_id = result["id"]
 
     if not post_id:
         alert.set("ERROR: post could not be returned")
         return redirect("/post")
+
+    if tag:
+        api.tags.insert(post_id, tag)
 
     jpeg.save(data, post_id)
     api.posts.update_filename(post_id, f"{post_id}.jpg")
@@ -69,8 +97,10 @@ def create_view():
     if not sesh.validate():
         return redirect("/login")
 
+    tags = api.tags.get_all()
+
     csrf.init()
-    return render_template("post_form.html")
+    return render_template("post_form.html", tags=tags)
 
 
 def delete(post_id):
@@ -158,4 +188,6 @@ def update(post_id):
 
 def view(post_id):
     post = to_localtime(api.posts.get(post_id))
-    return render_template("post.html", post=post)
+    comments = [to_localtime(c) for c in api.comments.get_of(post_id)]
+
+    return render_template("post.html", post=post, comments=comments)

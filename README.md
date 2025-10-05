@@ -20,7 +20,7 @@
   - [ ] Allow liking of posts
 
 - [ ] Comments
-  - [ ] Create comments on posts
+  - [X] Create comments on posts
   - [ ] Allow editing and removing of comments
   - [ ] Allow liking of comments
 
