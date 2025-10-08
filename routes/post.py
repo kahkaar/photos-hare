@@ -5,11 +5,11 @@ from flask import (
     send_from_directory,
     session,
 )
+from werkzeug.datastructures.file_storage import FileStorage
 
 import api
-from routes.helpers import alert, csrf, jpeg
+from routes.helpers import alert, csrf, jpeg, to_localtime
 from routes.helpers import session as sesh
-from routes.helpers import to_localtime
 
 from . import helpers
 
@@ -29,17 +29,17 @@ def comment(post_id):
     if not sesh.validate():
         return redirect(f"/post/{post_id}")
 
-    comment = request.form.get("comment", "", str).strip()
+    cmnt = request.form.get("comment", "", str).strip()
 
-    if not helpers.is_comment_valid(comment):
-        alert.set("Comment is either too short or too long")
-        return redirect(f"/post/{post_id}")
+    if not helpers.is_comment_valid(cmnt):
+        errors = ["comment is either too short or too long"]
+        return helpers.redirect_with_errors("/post", errors)
 
     user_id = session["user_id"]
 
-    comment = api.comments.create(comment, post_id, user_id)
+    cmnt = api.comments.create(cmnt, post_id, user_id)
 
-    return redirect(f"/post/{post_id}#{comment['id']}")
+    return redirect(f"/post/{post_id}#{cmnt['id']}")
 
 
 def create():
@@ -50,19 +50,24 @@ def create():
     description = request.form.get("description", "", str).strip()
     unlisted = bool(request.form.get("unlisted", False, bool))
     tag = request.form.get("tags", "", str).strip().lower()
-    file = request.files.get("file", None)
+    file = request.files.get("file", FileStorage())
 
+    errors = set()
+    is_valid = True
     if not helpers.is_title_valid(title):
-        alert.set("ERROR: title is not valid")
-        return redirect("/post")
+        errors.add("title is not valid")
+        is_valid = False
 
     if not helpers.is_description_valid(description):
-        alert.set("ERROR: description is not valid")
-        return redirect("/post")
+        errors.add("description is not valid")
+        is_valid = False
 
     if not file:
-        alert.set("ERROR: file not found")
-        return redirect("/post")
+        errors.add("file not found")
+        is_valid = False
+
+    if not is_valid:
+        return helpers.redirect_with_errors("/post", errors)
 
     data = file.read()
 
@@ -70,19 +75,25 @@ def create():
     max_size_bytes = max_size_kb * 1024
 
     if len(data) > max_size_bytes:
-        alert.set(f"ERROR: file size too big (max {max_size_bytes} bytes)")
-        return redirect("/post")
+        errors.add(f"file size too big (max {max_size_bytes} bytes)")
+        is_valid = False
 
     if not jpeg.validate_signature(data):
-        alert.set("ERROR: file is not valid, must be (.jpg, .jpeg)")
-        return redirect("/post")
+        errors.add("file is not valid (must be .jpg, .jpeg)")
+        is_valid = False
+
+    if not is_valid:
+        return helpers.redirect_with_errors("/post", errors)
 
     result = api.posts.create(title, description, unlisted)
     post_id = result["id"]
 
     if not post_id:
-        alert.set("ERROR: post could not be returned")
-        return redirect("/post")
+        errors.add("post could not be returned")
+        is_valid = False
+
+    if not is_valid:
+        return helpers.redirect_with_errors("/post", errors)
 
     if tag:
         api.tags.insert(post_id, tag)
@@ -144,7 +155,7 @@ def edit_view(post_id):
 
     post = to_localtime(post)
 
-    csrf.init
+    csrf.init()
     return render_template("edit_post_form.html", post=post)
 
 
@@ -172,7 +183,9 @@ def update(post_id):
     if desc_changed or unlisted_changed:
         api.posts.update(post_id, new_desc, new_unlisted)
 
-        message = f"Edited description and listing status ({'unlisted' if new_unlisted else 'listed'})"
+        message = f"Edited description and listing status ({
+            'unlisted' if new_unlisted else 'listed'
+        })"
         if desc_changed and not unlisted_changed:
             message = "Post has a new description"
         elif not desc_changed and unlisted_changed:

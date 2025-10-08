@@ -17,7 +17,8 @@
 <p>{{ post.description }}</p>
 <p>Likes: {{ post.likes }}</p>
 <img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
-<p>Tag: {{ post.tag }}</p>
+{% if post.tag %}<p>Tag: {{ post.tag }}</p>{% endif %}
+
 {% if session.user_id %}
 <form action="/post/{{ post.id }}/comment" method="post">
   <p>

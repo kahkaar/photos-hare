@@ -137,7 +137,7 @@ def me():
 
 
 @app.route("/user/<user>", methods=["GET"])
-def user(user):
+def user_view(user):
     match request.method:
         case "GET":
             return routes.user.view(user)

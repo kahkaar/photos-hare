@@ -16,7 +16,7 @@ FAVICON_TYPES = {
 
 
 def favicon(ext="ico"):
-    if ext not in FAVICON_TYPES.keys():
+    if ext not in FAVICON_TYPES:
         abort(404)
 
     return send_from_directory(

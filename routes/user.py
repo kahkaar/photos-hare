@@ -1,13 +1,11 @@
 import sqlite3
-from contextlib import redirect_stderr
 
 from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import api
-from routes.helpers import alert, csrf
+from routes.helpers import alert, csrf, to_localtime
 from routes.helpers import session as sesh
-from routes.helpers import to_localtime
 
 from . import helpers
 
@@ -178,32 +176,40 @@ def update():
     display_name_changed = display_name != new_display_name
     password_changed = password and new_password and new_password1
 
-    if display_name_changed:
-        print("This should be True", display_name, new_display_name)
-        if new_display_name.lower() != username:
-            alert.set("ERROR: display name is not valid")
-            return redirect("/user/me/edit")
+    errors = set()
+    is_valid = True
+    if display_name_changed and new_display_name.lower() != username:
+        errors.add(
+            "display name is not valid (can only change capitalization)"
+        )
+        is_valid = False
+
+    if not is_valid:
+        return helpers.redirect_with_errors("/user/me/edit", errors)
 
     if password_changed:
         if not helpers.is_password_valid(password):
-            alert.set("ERROR: old password is not valid")
-            return redirect("/user/me/edit")
+            errors.add("old password is not valid")
+            is_valid = False
 
         if not helpers.is_password_valid(new_password):
-            alert.set("ERROR: new password is not valid")
-            return redirect("/user/me/edit")
+            errors.add("new password is not valid")
+            is_valid = False
 
         if new_password != new_password1:
-            alert.set("ERROR: new passwords are not the same")
-            return redirect("/user/me/edit")
+            errors.add("new passwords are not the same")
+            is_valid = False
 
         if not check_password_hash(password_hash, password):
-            alert.set("ERROR: old password is not valid")
-            return redirect("/user/me/edit")
+            errors.add("old password is not valid")
+            is_valid = False
 
         if check_password_hash(password_hash, new_password):
-            alert.set("ERROR: old and new passwords were the same")
-            return redirect("/user/me/edit")
+            errors.add("old and new passwords are the same")
+            is_valid = False
+
+        if not is_valid:
+            return helpers.redirect_with_errors("/user/me/edit", errors)
 
         new_password_hash = generate_password_hash(new_password)
 
@@ -226,7 +232,7 @@ def view(user):
     user = user.strip().lower()
 
     user_posts = []
-    if sesh.validate() and (user == "me" or user == session["user_id"]):
+    if sesh.validate() and user in ("me", session["user_id"]):
         user = session["user_id"]
         user_posts = api.posts.get_unlisted_of(user)
     elif user == "me" and not sesh.validate():

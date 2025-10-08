@@ -28,7 +28,7 @@ def forbidden(e):
     return render_template("403.html", error=e), 403
 
 
-def method_not_allowed(e):
+def method_not_allowed():
     return jsonify({"error": "Method not allowed"}), 405
 
 

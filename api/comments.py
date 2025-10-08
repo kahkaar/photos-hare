@@ -2,9 +2,11 @@ import db
 from api import helpers
 
 __all__ = [
+    "create",
     "get_by",
     "get_of",
 ]
+
 
 CREATE = """INSERT INTO
   posts_comments (text, post_id, user_id)
