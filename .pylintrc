@@ -1,0 +1,3 @@
+[MAIN]
+# The following directories have been ignored from the linting process.
+ignore=.venv,__pycache__,schema,static,templates,uploads

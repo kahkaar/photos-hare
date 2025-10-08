@@ -2,6 +2,18 @@
 
 `/ˈfəʊtəʊz heə/` is an image sharing web-application created as the course project for [Tietokannat ja web-ohjelmointi `TKT20019`](https://studies.helsinki.fi/kurssit/opintojakso/otm-f15d8b61-6e3e-47d2-8191-43a92d7d8607/TKT20019?cpId=hy-lv-76)
 
+
+## Table of Contents
+- [Photos Hare](#photos-hare)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Running the Application](#running-the-application)
+  - [Developing the Application](#developing-the-application)
+  - [Running Pylint](#running-pylint)
+  - [Evaluation](#evaluation)
+
+
+
 ## Features
 
 - [X] User
@@ -74,12 +86,27 @@ sqlite3 database.db < schema/schema.sql
 sqlite3 database.db < schema/dummy.sql
 ```
 
-4. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
+1. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
 
-5. Start the server in **debug mode**
+2. Start the server in **debug mode**
 ```bash
 flask run --debug
 ```
+
+
+## Running Pylint
+
+1. Be within the virtual environment with developer requirements installed detailed in [Developing the Application](#developing-the-application)
+
+2. Run the linter (check [`.pylintrc`](/.pylintrc) for ignored directories)
+```bash
+pylint ./
+# pylint ./ --disable=C0114,C0116 # These hide missing docstring errors
+```
+
+- [C0114 (missing-module-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0114)
+- [C0116 (missing-function-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0116)
+
 
 ## Evaluation
 
