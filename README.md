@@ -19,21 +19,27 @@
 - [X] User
   - [X] Create user
   - [X] Log in as user
-  - [X] Update user settings (change password, and display name capitalization)
+  - [X] Update user settings
+    - [X] Change display name capitalization
+    - [X] Change password
 
 - [ ] Posting
   - [X] Share an image
     - [X] With a title
     - [X] With a description
-    - [ ] With tags
+    - [ ] With tag
   - [X] Allow unlisting of posts (does not show on main page or profile page)
-  - [ ] Allow editing of posts (title, description, unlisted, tags)
+  - [ ] Allow editing of posts
+    - [ ] ~~Title~~
+    - [X] Description
+    - [X] Unlisted
+    - [ ] Tag
   - [X] Allow removing of posts
   - [ ] Allow liking of posts
 
 - [ ] Comments
   - [X] Create comments on posts
-  - [ ] Allow editing and removing of comments
+  - [ ] ~~Allow editing and removing of comments~~
   - [ ] Allow liking of comments
 
 - [ ] Searching
@@ -60,7 +66,7 @@ sqlite3 database.db < schema/schema.sql
 sqlite3 database.db < schema/init.sql
 ```
 
-4. Create a secret key in `config.py` (see `config.template.py`)
+4. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
 
 5. Start the server using Flask
 ```bash
@@ -86,9 +92,9 @@ sqlite3 database.db < schema/schema.sql
 sqlite3 database.db < schema/dummy.sql
 ```
 
-1. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
+4. Create a secret key in `config.py` (see [`config.template.py`](/config.template.py))
 
-2. Start the server in **debug mode**
+5. Start the server in **debug mode**
 ```bash
 flask run --debug
 ```
