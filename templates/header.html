@@ -1,27 +1,24 @@
 <header>
-  <h1>Photos Hare</h1>
   <div>
-    <a href="/">Home</a>
-    {% if session.username %}
-    <a href="/post">Post</a>
-    <span>Logged in as <i><a href="/user/me">{{ session.display_name }}</a></i> &#x2013;</span>
-    <a href="/logout">Logout</a>
-    {% else %}
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    {% endif %}
-  </div>
-  <div id="search-box">
-    <form action="/" method="get">
-      <p>
-        <label for="q">Search</label>
-        {% if session.query %}
-        <input type="text" id="q" name="q" placeholder="Search..." value="{{ session.query }}" />
-        {% else %}
-        <input type="text" id="q" name="q" placeholder="Search..." />
-        {% endif %}
-      </p>
-      <input type="submit" value="Search" />
-    </form>
+    <h1>Photos Hare</h1>
+    <span>
+      <a href="/">Home</a>
+      {% if session.user_id %}
+      <a href="/post">Post</a>
+      <span>Logged in as <i><a href="/user/me">{{ session.display_name }}</a></i> &#x2013; <a
+          href="/logout">Logout</a></span>
+      {% else %}
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+      {% endif %}
+      <form id="search-box" action="/" method="get">
+        <span>
+          <label for="q">Search</label>
+          <input type="text" id="q" name="q" placeholder="Search..." {% if session.query %} value="{{ session.query }}"
+            {% endif %} />
+        </span>
+        <input type="submit" value="Search" />
+      </form>
+    </span>
   </div>
 </header>

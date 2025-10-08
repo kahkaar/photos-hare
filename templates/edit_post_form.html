@@ -25,6 +25,6 @@
   <input type="submit" value="Edit" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
-<a href="/post/{{ post.id }}">Cancel</a>
-<a href="/post/{{ post.id }}/delete">Delete</a>
+<a class="button" href="/post/{{ post.id }}">Cancel</a>
+<a class="button" href="/post/{{ post.id }}/delete">Delete</a>
 {% endblock %}

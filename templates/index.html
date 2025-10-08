@@ -3,25 +3,23 @@
 {% block title %}Photos Hare{% endblock %}
 
 {% block content %}
-<h2 class="card-heading">Heading2</h2>
-<p>Posts</p>
+<!-- <h2 class="card-heading">Heading2</h2> -->
+<!-- <p>Posts</p> -->
 {% if posts %}
-<ul>
-  {% for post in posts %}
-  <li>
-    <a href="/post/{{ post.id }}">
-      {{ post.id }} &#x2013; {{ post.title }}
-    </a>
-    &#x2013;
-    <a href="/user/{{ post.user_id }}">
-      {{ post.display_name }} &#x2013; {{ post.user_id }}
-    </a>
-    <a href="/post/{{ post.id }}">
-      <img class="wall" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+{% for post in posts %}
+<div>
+  <a href="/post/{{ post.id }}">
+    {{ post.id }} &#x2013; {{ post.title }}
+  </a>
+  &#x2013;
+  <a href="/user/{{ post.user_id }}">
+    {{ post.display_name }} &#x2013; {{ post.user_id }}
+  </a>
+  <a href="/post/{{ post.id }}">
+    <img class="wall" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
+  </a>
+</div>
+{% endfor %}
 {% else %}
 {% if session.query %}
 <p>No posts found containing '{{ session.query }}'</p>
@@ -29,10 +27,12 @@
 <p>No posts found</p>
 {% endif %}
 {% endif %}
+{#
 <p>Users</p>
 <ul>
   {% for user in users %}
   <li>{{ user.id }} &#x2013; {{ user.username }}</li>
   {% endfor %}
 </ul>
+#}
 {% endblock %}

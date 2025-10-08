@@ -32,8 +32,8 @@
   <input type="submit" value="Update" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
-<a href="/user/me">Cancel</a>
+<a class="button" href="/user/me">Cancel</a>
 {#
-<a href="/user/me/delete">Delete</a>
+<a class="button" href="/user/me/delete">Delete</a>
 #}
 {% endblock %}

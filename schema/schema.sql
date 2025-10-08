@@ -19,7 +19,6 @@ CREATE TABLE users (
   CHECK(
     LENGTH(username) >= 4
     AND LENGTH(username) <= 24
-    AND LOWER(username) = username
   )
 );
 

@@ -7,7 +7,7 @@
 {% if user %}
 <h2 class="card-heading">{{ user.display_name }}</h2>
 {% if user.id == session.user_id %}
-<a href="/user/me/edit">Settings</a>
+<a class="button" href="/user/me/edit">Settings</a>
 {% endif %}
 <p>Posts made {{ user.post_count }}</p>
 <p>Comments made {{ user.comment_count }}</p>
