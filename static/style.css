@@ -32,7 +32,9 @@ header {
   border-width: 0 1px 1px 1px;
   margin-bottom: 2rem;
   transition-duration: 150ms;
-  width: 1280px;
+  min-width: 640px;
+  width: 100%;
+  max-width: 1280px;
 }
 
 header:hover {
@@ -86,13 +88,49 @@ div#alert>div>form {
 
 div#root-content {
   margin-bottom: auto;
-  width: 960px;
+  min-width: 640px;
+  width: 100%;
+  max-width: 960px;
 }
 
-div#root-content {
-  margin-bottom: auto;
-  width: 960px;
+div#wall {
+  display: flex;
+  justify-content: space-between;
 }
+
+div#posts-list {
+  width: 100%;
+}
+
+div#wall>div#posts-list>div {
+  border-color: #f2f2f230;
+  border-radius: 1rem;
+  border-style: dashed;
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  transition-duration: 150ms;
+}
+
+div#wall>div#posts-list>div:hover {
+  border-color: #f2f2f2;
+}
+
+div#wall>div#posts-list>div>a {
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+div#wall>div#posts-list>div>div {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* div#users-list {
+  width: 0;
+} */
 
 div#post-header {
   display: flex;
@@ -160,7 +198,9 @@ footer {
   margin-top: 2rem;
   font-size: large;
   transition-duration: 150ms;
-  width: 1280px;
+  min-width: 640px;
+  width: 100%;
+  max-width: 1280px;
 }
 
 footer>div {
@@ -189,7 +229,7 @@ footer>div>a:hover {
 img.wall {
   height: 360px;
   object-fit: cover;
-  width: 320px;
+  /* width: 320px; */
 }
 
 img.list {
