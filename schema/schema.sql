@@ -16,10 +16,6 @@ CREATE TABLE users (
   password_hash TEXT NOT NULL,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
   updated_at INTEGER, -- This and every other `updated_at` column is updated by a trigger; do not update
-  CHECK(
-    LENGTH(username) >= 4
-    AND LENGTH(username) <= 24
-  )
 );
 
 CREATE TABLE posts (
