@@ -7,7 +7,7 @@ config.py
 # Uploads
 uploads/*
 !uploads/_dummy.jpg
-!uploads/_dummy.jpg.license
+!uploads/_dummy.jpg.credits
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
