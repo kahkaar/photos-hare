@@ -10,8 +10,8 @@
   - [Running the Application](#running-the-application)
   - [Developing the Application](#developing-the-application)
   - [Running Pylint](#running-pylint)
+  - [Development Information](#development-information)
   - [Evaluation](#evaluation)
-
 
 
 ## Features
@@ -106,12 +106,19 @@ flask run --debug
 
 2. Run the linter (check [`.pylintrc`](/.pylintrc) for ignored directories)
 ```bash
-pylint ./
-# pylint ./ --disable=C0114,C0116 # These hide missing docstring errors
+# pylint ./
+pylint ./ --disable=C0114,C0116 # These hide docstring errors
 ```
 
 - [C0114 (missing-module-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0114)
 - [C0116 (missing-function-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0116)
+
+
+## Development Information
+
+- Developed and tested with [`Python 3.13.3`](https://www.python.org/downloads/release/python-3133/) and [`Python 3.13.7`](https://www.python.org/downloads/release/python-3137/)
+
+- `sqlite3` versions used with development and testing [`3.46.1`](https://sqlite.org/releaselog/3_46_1.html), [`3.49.2`](https://sqlite.org/releaselog/3_49_2.html), [`3.50.4`](https://sqlite.org/releaselog/3_50_4.html)
 
 
 ## Evaluation
