@@ -15,7 +15,7 @@ CREATE TABLE users (
   display_name TEXT UNIQUE, -- Allows username capitalization to be changed; LOWER(display_name) = username
   password_hash TEXT NOT NULL,
   created_at INTEGER NOT NULL DEFAULT (UNIXEPOCH('now')),
-  updated_at INTEGER, -- This and every other `updated_at` column is updated by a trigger; do not update
+  updated_at INTEGER -- This and every other `updated_at` column is updated by a trigger; do not update
 );
 
 CREATE TABLE posts (

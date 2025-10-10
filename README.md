@@ -27,7 +27,7 @@
   - [X] Share an image
     - [X] With a title
     - [X] With a description
-    - [ ] With tag
+    - [X] With tag
   - [X] Allow unlisting of posts (does not show on main page or profile page)
   - [ ] Allow editing of posts
     - [ ] ~~Title~~
