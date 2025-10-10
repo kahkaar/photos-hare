@@ -13,5 +13,5 @@ def init():
 
 
 def validate():
-    if request.form["csrf_token"] != session["csrf_token"]:
+    if request.form.get("csrf_token") != session.get("csrf_token", -1):
         abort(403)

@@ -19,14 +19,14 @@
       </div>
     </div>
     {% endfor %}
+    {% else %}
+    {% if session.query %}
+    <p>No posts found containing '{{ session.query }}'</p>
+    {% else %}
+    <p>No posts found</p>
+    {% endif %}
+    {% endif %}
   </div>
-  {% else %}
-  {% if session.query %}
-  <p>No posts found containing '{{ session.query }}'</p>
-  {% else %}
-  <p>No posts found</p>
-  {% endif %}
-  {% endif %}
   <div id="users-list">
     <p>Users</p>
     {% for user in users %}

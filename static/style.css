@@ -110,6 +110,7 @@ div#wall>div#posts-list>div {
   display: flex;
   flex-direction: column;
   margin: 1rem 0;
+  padding: 1rem 0.5rem;
   transition-duration: 150ms;
 }
 
@@ -128,10 +129,6 @@ div#wall>div#posts-list>div>div {
   justify-content: space-between;
 }
 
-/* div#users-list {
-  width: 0;
-} */
-
 div#post-header {
   display: flex;
   flex-direction: column;
@@ -144,20 +141,26 @@ div#post-header>div#post-info {
 }
 
 div#comments {
-  border-style: dashed;
-  border-width: 1px;
-  margin: 1rem 0;
-  padding: 0.5rem;
   max-width: 100%;
 }
 
 div#comments>div {
+  border-color: #f2f2f230;
+  border-radius: 0.5rem;
+  border-style: dashed;
+  border-width: 1px;
   display: flex;
   flex-direction: column;
   margin-left: auto;
+  margin-top: 1rem;
   max-width: 100%;
+  padding: 0.5rem;
 }
 
+div#comments>div:hover {
+  border-color: #f2f2f2;
+  transition-duration: 150ms;
+}
 
 div#comments>div>div.comment-header {
   display: flex;
@@ -229,7 +232,7 @@ footer>div>a:hover {
 img.wall {
   height: 360px;
   object-fit: cover;
-  /* width: 320px; */
+  border-radius: 1rem;
 }
 
 img.list {

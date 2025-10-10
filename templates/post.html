@@ -39,8 +39,8 @@
   <p>log in to comment</p>
   {% endif %}
   {% if comments %}
-  {% for comment in comments %}
   <div id="comments">
+  {% for comment in comments %}
     <div id="{{ comment.id }}">
       <div class="comment-header">
         <a href="/user/{{ comment.user_id }}">{{ comment.display_name }}</a>
@@ -53,8 +53,8 @@
         <p>{{ comment.text }}</p>
       </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
   {% endif %}
 
   {% else %}
