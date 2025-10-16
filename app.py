@@ -118,10 +118,12 @@ def me():
     abort(405)
 
 
-@app.route("/user/<user>", methods=["GET"])
+@app.route("/user/<user>", methods=["GET", "POST"])
 def user_view(user):
     if request.method == "GET":
         return routes.user.view(user)
+    elif request.method == "POST":
+        return routes.user.goto_user_edit()
     abort(405)
 
 

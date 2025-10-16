@@ -29,17 +29,17 @@ def comment(post_id):
     if not sesh.validate():
         return redirect(f"/post/{post_id}")
 
-    cmnt = request.form.get("comment", "", str).strip()
+    message = request.form.get("comment", "", str).strip()
 
-    if not helpers.is_comment_valid(cmnt):
+    if not helpers.is_comment_valid(message):
         errors = ["comment is either too short or too long"]
         return helpers.redirect_with_errors("/post", errors)
 
     user_id = session["user_id"]
 
-    cmnt = api.comments.create(cmnt, post_id, user_id)
+    new_comment = api.comments.create(message, post_id, user_id)
 
-    return redirect(f"/post/{post_id}#{cmnt['id']}")
+    return redirect(f"/post/{post_id}#{new_comment['id']}")
 
 
 def create():
@@ -118,6 +118,9 @@ def delete(post_id):
     sesh.require_login()
     csrf.validate()
 
+    if "cancel" in request.form:
+        return redirect(f"/post/{post_id}")
+
     post = api.posts.get(post_id)
     sesh.require_ownership(post)
 
@@ -166,6 +169,11 @@ def image(filename):
 def update(post_id):
     sesh.require_login()
     csrf.validate()
+
+    if "cancel" in request.form:
+        return redirect(f"/post/{post_id}")
+    elif "delete" in request.form:
+        return redirect(f"/post/{post_id}/delete")
 
     post = api.posts.get(post_id)
     sesh.require_ownership(post)

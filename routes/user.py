@@ -102,6 +102,12 @@ def edit_view():
     return render_template("edit_user_form.html", user=user)
 
 
+def goto_user_edit():
+    if sesh.validate():
+        return redirect("/user/me/edit")
+    return redirect("/login")
+
+
 def login():
     username = request.form.get("username", "", str).strip().lower()
     password = request.form.get("password", "", str).strip()
