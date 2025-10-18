@@ -13,27 +13,25 @@
 {% endif %}
 <p>Posts made {{ user.post_count }}</p>
 <p>Comments made {{ user.comment_count }}</p>
-{% if posts %}
-<ul>
-  {% for post in posts %}
-  <li>
-    <a href="/post/{{ post.id }}">
-      {{ post.title }} &#x2013; {{ post.created_at }}
-      {# TODO: Fix post updating when creating (not important).
-      {% if post.updated_at %}
-      (edited {{ post.updated_at }})
-      {% endif %}
-      #}
-      <img class="list" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ user.display_name }}'">
-    </a>
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-<p>no posts found</p>
-{% endif %}
-{% else %}
-<h2>user not found</h2>
+<div id="wall">
+  <div id="posts-list">
+    {% if posts %}
+    {% for post in posts %}
+    <div>
+      <p>{{ post.title }}</p>
+      <a href="/post/{{ post.id }}">
+        <img class="wall" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ user.display_name }}'">
+      </a>
+      <div>
+        <p>{{ post.created_at }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>no posts found</p>
+    {% endif %}
+  </div>
+</div>
 {% endif %}
 
 {% endblock %}

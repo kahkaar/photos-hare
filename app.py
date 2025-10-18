@@ -69,8 +69,10 @@ def clear_alert():
 def register():
     if request.method == "GET":
         return routes.user.create_view()
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.user.create()
+
     abort(405)
 
 
@@ -78,8 +80,10 @@ def register():
 def login():
     if request.method == "GET":
         return routes.user.login_view()
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.user.login()
+
     abort(405)
 
 
@@ -87,6 +91,7 @@ def login():
 def logout():
     if request.method == "GET":
         return routes.user.logout()
+
     abort(405)
 
 
@@ -94,20 +99,11 @@ def logout():
 def edit_user():
     if request.method == "GET":
         return routes.user.edit_view()
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.user.update()
+
     abort(405)
-
-
-# @app.route("/user/me/delete", methods=["GET", "POST"])
-# def delete_user():
-#     match request.method:
-#         case "GET":
-#             return routes.user.delete_view()
-#         case "POST":
-#             return routes.user.delete()
-#         case _:
-#             abort(405)
 
 
 @app.route("/me", methods=["GET"])
@@ -120,10 +116,14 @@ def me():
 
 @app.route("/user/<user>", methods=["GET", "POST"])
 def user_view(user):
+    user = user.strip().lower()
+
     if request.method == "GET":
         return routes.user.view(user)
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.user.goto_user_edit()
+
     abort(405)
 
 
@@ -131,8 +131,10 @@ def user_view(user):
 def post():
     if request.method == "GET":
         return routes.post.create_view()
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.post.create()
+
     abort(405)
 
 
@@ -176,8 +178,10 @@ def delete_post(post_id):
 
     if request.method == "GET":
         return routes.post.delete_view(post_id)
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.post.delete(post_id)
+
     abort(405)
 
 
@@ -187,8 +191,10 @@ def edit_post(post_id):
 
     if request.method == "GET":
         return routes.post.edit_view(post_id)
-    elif request.method == "POST":
+
+    if request.method == "POST":
         return routes.post.update(post_id)
+
     abort(405)
 
 

@@ -38,7 +38,6 @@ FROM
 WHERE
   id = LOWER(?)"""
 
-# TODO: post_count and comment_count not returning correct value
 GET_USER_BY_USERNAME = """SELECT
   u.id,
   u.username,
@@ -52,7 +51,7 @@ FROM
 WHERE
   u.username = LOWER(?)
 GROUP BY
-  p.id"""
+  u.id"""
 
 GET_USER_BY_USER_ID = """SELECT
   u.id,
@@ -67,7 +66,7 @@ FROM
 WHERE
   u.id = LOWER(?)
 GROUP BY
-  p.id"""
+  u.id"""
 
 GET_USER_BY_ROWID = """SELECT
   id,

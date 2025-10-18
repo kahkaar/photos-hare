@@ -29,9 +29,13 @@
   </div>
   <div id="users-list">
     <p>Users</p>
+    {% if users %}
     {% for user in users %}
     <a href="/user/{{ user.id }}">{{ user.username }}</a>
     {% endfor %}
+    {% else %}
+    <p>No users found</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

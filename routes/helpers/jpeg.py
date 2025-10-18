@@ -17,6 +17,9 @@ def save(data, post_id):
 
 
 def validate_signature(data):
+    if not data or len(data) < 4:
+        return False
+
     soi = data[:2]
     eoi = data[-2:]
 

@@ -26,7 +26,7 @@ __all__ = [
 
 def comment(post_id):
     csrf.validate()
-    if not sesh.validate():
+    if not sesh.has_session():
         return redirect(f"/post/{post_id}")
 
     message = request.form.get("comment", "", str).strip()
@@ -44,7 +44,7 @@ def comment(post_id):
 
 def create():
     csrf.validate()
-    sesh.require_login()
+    sesh.require_session()
 
     title = request.form.get("title", "", str).strip()
     description = request.form.get("description", "", str).strip()
@@ -105,7 +105,7 @@ def create():
 
 
 def create_view():
-    if not sesh.validate():
+    if not sesh.has_session():
         return redirect("/login")
 
     tags = api.tags.get_all()
@@ -115,7 +115,7 @@ def create_view():
 
 
 def delete(post_id):
-    sesh.require_login()
+    sesh.require_session()
     csrf.validate()
 
     if "cancel" in request.form:
@@ -133,7 +133,7 @@ def delete(post_id):
 
 
 def delete_view(post_id):
-    if not sesh.validate():
+    if not sesh.has_session():
         return redirect(f"/post/{post_id}")
 
     post = api.posts.get(post_id)
@@ -148,7 +148,7 @@ def delete_view(post_id):
 
 
 def edit_view(post_id):
-    if not sesh.validate():
+    if not sesh.has_session():
         return redirect(f"/post/{post_id}")
 
     post = api.posts.get(post_id)
@@ -167,12 +167,13 @@ def image(filename):
 
 
 def update(post_id):
-    sesh.require_login()
+    sesh.require_session()
     csrf.validate()
 
     if "cancel" in request.form:
         return redirect(f"/post/{post_id}")
-    elif "delete" in request.form:
+
+    if "delete" in request.form:
         return redirect(f"/post/{post_id}/delete")
 
     post = api.posts.get(post_id)
@@ -182,7 +183,7 @@ def update(post_id):
     unlisted = post["unlisted"]
 
     new_desc = request.form.get("description", description, str).strip()
-    new_unlisted = bool(request.form.get("unlisted", unlisted, bool))
+    new_unlisted = bool(request.form.get("unlisted", False, bool))
 
     desc_changed = description != new_desc
     unlisted_changed = unlisted != new_unlisted
@@ -191,7 +192,9 @@ def update(post_id):
     if desc_changed or unlisted_changed:
         api.posts.update(post_id, new_desc, new_unlisted)
 
-        message = f"Edited description and listing status ({'unlisted' if new_unlisted else 'listed'})"
+        status = "unlisted" if new_unlisted else "listed"
+        message = f"Edited description and listing status({status})"
+
         if desc_changed and not unlisted_changed:
             message = "Post has a new description"
         elif not desc_changed and unlisted_changed:

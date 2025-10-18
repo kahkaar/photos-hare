@@ -23,13 +23,15 @@ __all__ = [
 
 
 def delete_image(filename):
-    dir_path = os.path.join("uploads")
-    file_path = os.path.join(dir_path, filename)
+    path = os.path.join("uploads", filename)
 
-    os.makedirs(dir_path, exist_ok=True)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    if os.path.exists(file_path):
-        os.remove(file_path)
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except FileNotFoundError:
+        pass  # Assuming file already deleted.
 
 
 def get_referrer():

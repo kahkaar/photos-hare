@@ -12,9 +12,8 @@ from . import helpers
 __all__ = [
     "create",
     "create_view",
-    # "delete",
-    # "delete_view",
     "edit_view",
+    "goto_user_edit",
     "login",
     "login_view",
     "logout",
@@ -61,39 +60,21 @@ def create():
 
 
 def create_view():
-    if sesh.validate():
+    if sesh.has_session():
         return redirect("/")
 
     csrf.init()
     return render_template("user_form.html")
 
 
-# def delete():
-#     sesh.require_login()
-#     csrf.validate()
-
-#     user = api.posts.get(session.get("user_id", None))
-#     sesh.authenticate(user)
-
-#     # api.users.delete(user_id)
-
-
-# def delete_view():
-#     sesh.require_login()
-
-#     user = api.users.get(session.get("user_id", None))
-
-#     if not sesh.is_user(user):
-#         return redirect("/user/me")
-
-#     csrf.init()
-#     return render_template("delete_user_form.html")
-
-
 def edit_view():
-    sesh.require_login()
+    if not sesh.has_session():
+        return redirect("/login")
 
     user = api.users.get(session.get("user_id", None))
+
+    if not user:
+        return redirect("/")
 
     if not sesh.is_user(user):
         return redirect("/user/me")
@@ -103,7 +84,7 @@ def edit_view():
 
 
 def goto_user_edit():
-    if sesh.validate():
+    if sesh.has_session():
         return redirect("/user/me/edit")
     return redirect("/login")
 
@@ -141,7 +122,7 @@ def login():
 
 
 def login_view():
-    if sesh.validate():
+    if sesh.has_session():
         return redirect("/")
 
     csrf.init()
@@ -154,13 +135,13 @@ def logout():
 
 
 def me():
-    if sesh.validate():
+    if sesh.has_session():
         return redirect("/user/me")
     return redirect("/login")
 
 
 def update():
-    sesh.require_login()
+    sesh.require_session()
     csrf.validate()
 
     result = api.users.get_login(session.get("user_id", None))
@@ -235,13 +216,11 @@ def update():
 
 
 def view(user):
-    user = user.strip().lower()
-
     user_posts = []
-    if sesh.validate() and user in ("me", session["user_id"]):
+    if sesh.has_session() and user in ("me", session["user_id"]):
         user = session["user_id"]
         user_posts = api.posts.get_unlisted_of(user)
-    elif user == "me" and not sesh.validate():
+    elif user == "me" and not sesh.has_session():
         return redirect("/login")
     else:
         user_posts = api.posts.get_all_of(user)
