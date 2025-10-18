@@ -102,9 +102,9 @@ flask run --debug
 
 ## Running Pylint
 
-1. Be within the virtual environment with developer requirements installed detailed in [Developing the Application](#developing-the-application)
+1. Be within the virtual environment with developer requirements installed (detailed in [Developing the Application](#developing-the-application))
 
-2. Run the linter (check [`.pylintrc`](/.pylintrc) for ignored directories)
+2. Run the linter (check [`.pylintrc`](/.pylintrc) for ignored files and directories)
 ```bash
 # pylint ./
 pylint ./ --disable=C0114,C0116 # These hide docstring errors

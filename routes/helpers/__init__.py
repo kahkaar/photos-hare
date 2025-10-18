@@ -11,7 +11,7 @@ __all__ = [
     "csrf",
     "jpeg",
     "delete_image",
-    "get_referrer",
+    # "get_referrer",
     "is_comment_valid",
     "is_description_valid",
     "is_password_valid",
@@ -34,8 +34,8 @@ def delete_image(filename):
         pass  # Assuming file already deleted.
 
 
-def get_referrer():
-    return request.args.get("ref", "index", str)
+# def get_referrer():
+#     return request.args.get("ref", "index", str)
 
 
 def is_comment_valid(comment):
@@ -48,7 +48,7 @@ def is_description_valid(desc):
 
 def is_password_valid(password):
     # * Allowed characters `a-zA-Z0-9_!#$%&()*+-.?` (length 8 to 255 characters)
-    pattern = r"^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$"
+    pattern = r"^[\w_!#$%&()*+.\-?]{8,255}$"
     return bool(match(pattern, password))
 
 
@@ -58,7 +58,7 @@ def is_title_valid(title):
 
 def is_username_valid(username):
     # * Allowed characters `a-zA-Z0-9_` (length 4 to 24 characters)
-    pattern = r"^[\w]{4,24}+$"
+    pattern = r"^[\w]{4,24}$"
     return bool(match(pattern, username))
 
 

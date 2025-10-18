@@ -13,8 +13,8 @@
   </p>
   <p>
     <label for="password">Password</label>
-    <input type="password" name="password" id="password" pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$"
-      minlength="8" maxlength="255" required />
+    <input type="password" name="password" id="password" pattern="^[\w_!#$%&()*+.\-?]{8,255}+$" minlength="8"
+      maxlength="255" required />
   </p>
   <input type="submit" value="Log in" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" required />

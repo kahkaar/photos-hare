@@ -174,6 +174,10 @@ div#comments>div>div.comment-content {
   word-wrap: break-word;
 }
 
+.comment-content>.comment-text {
+  white-space: pre-wrap;
+}
+
 button,
 option,
 select,
