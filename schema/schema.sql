@@ -45,7 +45,7 @@ CREATE TABLE posts_comments (
 );
 
 CREATE TABLE posts_comments_likes (
-  posts_comment_id BLOB REFERENCES post_comment ON DELETE CASCADE,
+  posts_comment_id BLOB REFERENCES posts_comments ON DELETE CASCADE,
   user_id BLOB REFERENCES users ON DELETE CASCADE,
   type BOOLEAN NOT NULL
 );

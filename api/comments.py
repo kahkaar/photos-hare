@@ -5,6 +5,7 @@ __all__ = [
     "create",
     "get_by",
     "get_of",
+    "like",
 ]
 
 
@@ -50,7 +51,7 @@ GET_COMMENTS_OF_POST_ID = """SELECT
 FROM
   posts_comments AS pc
   LEFT JOIN users AS u ON u.id = pc.user_id
-  LEFT JOIN posts_comments_likes AS pcl ON pcl.posts_comment_id = pc.post_id
+  LEFT JOIN posts_comments_likes AS pcl ON pcl.posts_comment_id = pc.id
 WHERE
   pc.post_id = LOWER(?)
 GROUP BY
@@ -60,6 +61,17 @@ ORDER BY
   pc.id"""
 
 GET_COMMENTS_BY_USER_ID = """"""
+
+
+LIKE = """INSERT INTO
+  posts_comments_likes (posts_comment_id, user_id, type)
+VALUES
+  (LOWER(?), LOWER(?), ?)"""
+
+DELETE_LIKE = """DELETE FROM posts_comments_likes
+WHERE
+  posts_comment_id = LOWER(?)
+  AND user_id = LOWER(?)"""
 
 
 def create(text, post_id, user_id):
@@ -77,3 +89,11 @@ def get_by(user_id):
 def get_of(post_id):
     result = db.query(GET_COMMENTS_OF_POST_ID, [post_id])
     return helpers.validate_objects(result)
+
+
+def like(post_id, user_id, type):
+    db.execute(LIKE, [post_id, user_id, type])
+
+
+# def remove_like(post_id, user_id):
+#     db.execute(DELETE_LIKE, [post_id, user_id])

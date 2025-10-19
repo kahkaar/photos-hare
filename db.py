@@ -2,9 +2,19 @@ import sqlite3
 
 from flask import g
 
+__all__ = [
+    "get_connection",
+    "execute",
+    "last_insert_id",
+    "query",
+    "execute_many",
+]
+
+DATABASE = "database.db"
+
 
 def get_connection():
-    con = sqlite3.connect("database.db")
+    con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute("PRAGMA foreign_keys = ON")
     cur.execute("PRAGMA encoding = 'UTF-8'")

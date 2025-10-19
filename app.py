@@ -154,12 +154,16 @@ def post_view_id_redirect(post_id):
     abort(405)
 
 
-@app.route("/post/<post_id>", methods=["GET"])
+@app.route("/post/<post_id>", methods=["GET", "POST"])
 def post_view(post_id):
     post_id = post_id.strip().lower()
 
     if request.method == "GET":
         return routes.post.view(post_id)
+
+    if request.method == "POST":
+        return routes.post.like(post_id)
+
     abort(405)
 
 

@@ -1,16 +1,17 @@
-from flask import session
-
 import db
 
 from . import helpers
 
 __all__ = [
     "create",
+    "delete",
     "find",
     "get",
     "get_all",
     "get_all_of",
     "get_unlisted_of",
+    "like",
+    # "remove_like",
     "update",
     "update_filename",
 ]
@@ -235,10 +236,18 @@ GROUP BY
   p.created_at,
   p.id"""
 
+LIKE = """INSERT INTO
+  posts_likes (post_id, user_id, type)
+VALUES
+  (LOWER(?), LOWER(?), ?)"""
 
-def create(title, description="", unlisted=False):
-    user_id = session["user_id"]
+DELETE_LIKE = """DELETE FROM posts_likes
+WHERE
+  post_id = LOWER(?)
+  AND user_id = LOWER(?)"""
 
+
+def create(user_id, title, description="", unlisted=False):
     result = db.queries_get_last(
         [
             [CREATE_POST, [title, description, unlisted, user_id]],
@@ -247,6 +256,10 @@ def create(title, description="", unlisted=False):
     )
 
     return helpers.validate_object(result)
+
+
+def delete(post_id):
+    db.execute(DELETE, [post_id])
 
 
 def find(query):
@@ -289,31 +302,35 @@ def update(post_id, description, unlisted):
     return helpers.validate_object(result)
 
 
-def update_description(post_id, new_value):
-    result = db.queries_get_last(
-        [
-            [UPDATE_DESCRIPTION, [new_value, post_id]],
-        ],
-        [GET_POST_BY_POST_ID, [post_id]],
-    )
-
-    return helpers.validate_object(result)
+def like(post_id, user_id, type):
+    db.execute(LIKE, [post_id, user_id, type])
 
 
-def update_unlisted(post_id, new_value):
-    result = db.queries_get_last(
-        [
-            [UPDATE_UNLISTED, [new_value, post_id]],
-        ],
-        [GET_POST_BY_POST_ID, [post_id]],
-    )
+# def remove_like(post_id, user_id):
+#     db.execute(DELETE_LIKE, [post_id, user_id])
 
-    return helpers.validate_object(result)
+
+# def update_description(post_id, new_value):
+#     result = db.queries_get_last(
+#         [
+#             [UPDATE_DESCRIPTION, [new_value, post_id]],
+#         ],
+#         [GET_POST_BY_POST_ID, [post_id]],
+#     )
+
+#     return helpers.validate_object(result)
+
+
+# def update_unlisted(post_id, new_value):
+#     result = db.queries_get_last(
+#         [
+#             [UPDATE_UNLISTED, [new_value, post_id]],
+#         ],
+#         [GET_POST_BY_POST_ID, [post_id]],
+#     )
+
+#     return helpers.validate_object(result)
 
 
 def update_filename(post_id, new_value):
     db.execute(UPDATE_FILENAME, [new_value, post_id])
-
-
-def delete(post_id):
-    db.execute(DELETE, [post_id])

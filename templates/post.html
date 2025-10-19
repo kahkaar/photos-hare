@@ -16,7 +16,16 @@
       #}
     </div>
     <div id="post-info">
-      <p>Likes: {{ post.likes }}</p>
+      <div class="likes-container">
+        <p>Likes: {{ post.likes }}</p>
+        {% if session.user_id %}
+        <form action="/post/{{ post.id }}" method="post">
+          <input type="submit" name="like" value="+" />
+          <input type="submit" name="dislike" value="-" />
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+        </form>
+        {% endif %}
+      </div>
       {% if post.user_id == session.user_id %}
       <a href="/post/{{ post.id }}/edit">Edit</a>
       {% endif %}
@@ -27,14 +36,16 @@
   {% if post.tag %}<p>Tag: {{ post.tag }}</p>{% endif %}
 
   {% if session.user_id %}
-  <form action="/post/{{ post.id }}/comment" method="post">
-    <p>
-      <label for="comment">Comment</label>
-      <textarea name="comment" id="comment" maxlength="255" required></textarea>
-    </p>
-    <input type="submit" value="Comment" />
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-  </form>
+  <div id="comment-textbox">
+    <form action="/post/{{ post.id }}/comment" method="post">
+      <p>
+        <label for="comment">Comment</label>
+        <textarea name="comment" id="comment" maxlength="255" required></textarea>
+      </p>
+      <input type="submit" value="Comment" />
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    </form>
+  </div>
   {% else %}
   <p>log in to comment</p>
   {% endif %}
@@ -49,7 +60,16 @@
         </p>
       </div>
       <div class="comment-content">
-        <p>Likes: {{ comment.likes }}</p>
+        <div class="likes-container">
+          <p>Likes: {{ comment.likes }}</p>
+          {% if session.user_id %}
+          <form action="/post/{{ post.id }}?c={{ comment.id }}" method="post">
+            <input type="submit" name="like" value="+" />
+            <input type="submit" name="dislike" value="-" />
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+          </form>
+          {% endif %}
+        </div>
         <p class="comment-text">{{ comment.text }}</p>
       </div>
     </div>

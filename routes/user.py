@@ -4,10 +4,9 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import api
+import routes.helpers as helpers
 from routes.helpers import alert, csrf, to_localtime
 from routes.helpers import session as sesh
-
-from . import helpers
 
 __all__ = [
     "create",
@@ -143,6 +142,9 @@ def me():
 def update():
     sesh.require_session()
     csrf.validate()
+
+    if "cancel" in request.form:
+        return redirect("/user/me")
 
     result = api.users.get_login(session.get("user_id", None))
     sesh.authenticate(result)

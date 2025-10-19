@@ -3,7 +3,7 @@
 {% block title %}Edit User{% endblock %}
 
 {% block content %}
-<h2>Edit {{ user.name }}</h2>
+<h2>Settings</h2>
 <p>Created at {{ user.created_at }}{% if user.updated_at %}({{ user.updated_at }}){% endif %}</p>
 
 <form action="/user/me/edit" method="post">
@@ -30,10 +30,7 @@
       pattern="^[\w\x21\x23-\x26\x28-\x2e\x3f\x40]{8,255}+$" minlength="8" maxlength="255" />
   </p>
   <input type="submit" value="Update" />
+  <input type="submit" name="cancel" value="Cancel" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
-<a class="button" href="/user/me">Cancel</a>
-{#
-<a class="button" href="/user/me/delete">Delete</a>
-#}
 {% endblock %}

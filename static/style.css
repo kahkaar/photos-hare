@@ -129,6 +129,16 @@ div#wall>div#posts-list>div>div {
   justify-content: space-between;
 }
 
+#users-list {
+  display: flex;
+  flex-direction: column;
+  min-width: 14.5rem;
+}
+
+.likes-container {
+  display: flex;
+}
+
 div#post-header {
   display: flex;
   flex-direction: column;

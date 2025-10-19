@@ -19,6 +19,7 @@ __all__ = [
     "create_view",
     "delete",
     "image",
+    "like",
     "update",
     "view",
 ]
@@ -85,7 +86,8 @@ def create():
     if not is_valid:
         return helpers.redirect_with_errors("/post", errors)
 
-    result = api.posts.create(title, description, unlisted)
+    user_id = session["user_id"]
+    result = api.posts.create(user_id, title, description, unlisted)
     post_id = result["id"]
 
     if not post_id:
@@ -164,6 +166,24 @@ def edit_view(post_id):
 
 def image(filename):
     return send_from_directory("uploads", filename)
+
+
+def like(post_id):
+    sesh.require_session()
+    csrf.validate()
+
+    user_id = session["user_id"]
+    type = True if "like" in request.form else False
+
+    comment_id = request.args.get("c", "").strip().lower()
+    if comment_id:
+        print(comment_id, type)
+        api.comments.like(comment_id, user_id, type)
+        return redirect(f"/post/{post_id}#{comment_id}")
+
+    api.posts.like(post_id, user_id, type)
+
+    return redirect(f"/post/{post_id}")
 
 
 def update(post_id):
