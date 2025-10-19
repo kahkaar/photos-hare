@@ -236,7 +236,17 @@ def update(post_id):
 
 
 def view(post_id):
-    post = to_localtime(api.posts.get(post_id))
-    comments = [to_localtime(c) for c in api.comments.get_of(post_id)]
+    amount = request.args.get("a", 10, int)
+    page = request.args.get("p", 1, int)
 
-    return render_template("post.html", post=post, comments=comments)
+    limit = amount
+    offset = (page - 1) * amount
+
+    post = to_localtime(api.posts.get(post_id))
+    comments = [
+        to_localtime(c) for c in api.comments.get_of(post_id, limit, offset)
+    ]
+
+    return render_template(
+        "post.html", post=post, comments=comments, amount=amount, page=page
+    )

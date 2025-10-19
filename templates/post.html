@@ -51,8 +51,25 @@
   {% else %}
   <p>log in to comment</p>
   {% endif %}
-  {% if comments %}
   <div id="comments">
+    <div id="paginator">
+      <form action="/post/{{ post.id }}" method="get">
+        <div id="paginator-amount">
+          <label for="a">Comments shown</label>
+          <select id="a" name="a">
+            {% for v in [10, 25, 50, 100, 250] %}
+            <option value="{{ v }}" {% if amount==v %}selected{% endif %}>{{ v }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="paginator-page">
+          <label for="p">Page</label>
+          <input type="number" name="p" min="1" value="{{ page }}">
+        </div>
+        <input type="submit" value="Go">
+      </form>
+    </div>
+    {% if comments %}
     {% for comment in comments %}
     <div id="{{ comment.id }}">
       <div class="comment-header">
@@ -76,8 +93,11 @@
       </div>
     </div>
     {% endfor %}
+    {% endif %}
+    <div>
+      <p>Showing maximum of {{ amount }} posts on page {{ page }}</p>
+    </div>
   </div>
-  {% endif %}
 
   {% else %}
   <p>post not found</p>
