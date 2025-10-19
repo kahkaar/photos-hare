@@ -24,7 +24,7 @@
     - [X] Change display name capitalization
     - [X] Change password
 
-- [ ] Posting
+- [X] Posting
   - [X] Share an image
     - [X] With a title
     - [X] With a description
@@ -46,10 +46,10 @@
   - [X] Search by post title
   - [X] Search by tag
 
-- [ ] Paginator
+- [X] Paginator
   - [X] Paging posts
   - [X] Paging users
-  - [ ] Paging comments
+  - [X] Paging comments
 
 - [X] Seeding
   - [X] Users
