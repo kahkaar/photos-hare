@@ -3,6 +3,7 @@
     <h1>Photos Hare</h1>
     <span>
       <a href="/">Home</a>
+      <a href="/users">Users</a>
       {% if session.user_id %}
       <a href="/post">Post</a>
       <span>Logged in as <i><a href="/user/me">{{ session.display_name }}</a></i> &#x2013; <a
@@ -13,7 +14,7 @@
       {% endif %}
       <form id="search-box" action="/" method="get">
         <span>
-          <label for="q">Search</label>
+          <label for="q">Search (by title)</label>
           <input type="text" id="q" name="q" placeholder="Search..." {% if session.query %} value="{{ session.query }}"
             {% endif %} />
         </span>

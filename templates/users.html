@@ -3,22 +3,14 @@
 {% block title %}Photos Hare{% endblock %}
 
 {% block content %}
-
-{% if user %}
-<h2 class="card-heading">{{ user.display_name }}</h2>
-{% if user.id == session.user_id %}
-<form action="/user/me" method="post">
-  <input type="submit" value="Settings">
-</form>
-{% endif %}
-<p>Posts made {{ user.post_count }}</p>
-<p>Comments made {{ user.comment_count }}</p>
 <div id="wall">
-  <div id="posts-list">
+  <div id="users-list">
+    <h2>Users</h2>
     <div id="paginator">
-      <form action="/user/{{ user.id }}" method="get">
+      <form action="/users" method="get">
         <div id="paginator-amount">
-          <label for="a">Posts shown</label>
+          {# <input type="hidden" name="q" value="{{ session.q }}"> #}
+          <label for="a">Users shown</label>
           <select id="a" name="a">
             {% for v in [10, 25, 50, 100, 250] %}
             <option value="{{ v }}" {% if amount==v %}selected{% endif %}>{{ v }}</option>
@@ -32,26 +24,19 @@
         <input type="submit" value="Go">
       </form>
     </div>
-    {% if posts %}
-    {% for post in posts %}
-    <div>
-      <p>{{ post.title }}</p>
-      <a href="/post/{{ post.id }}">
-        <img class="wall" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ user.display_name }}'">
-      </a>
-      <div>
-        <p>{{ post.created_at }}</p>
-      </div>
+    {% if users %}
+    {% for user in users %}
+    <div id="user-{{ user.id }}">
+      <a href="/user/{{ user.id }}">{{ user.display_name }}</a>
+      <p>Created at {{ user.created_at }}</p>
     </div>
     {% endfor %}
     {% else %}
-    <p>No posts found</p>
+    <p>No users found</p>
     {% endif %}
     <div>
       <p>Showing maximum of {{ amount }} posts on page {{ page }}</p>
     </div>
   </div>
 </div>
-{% endif %}
-
 {% endblock %}

@@ -13,6 +13,7 @@ __all__ = [
     "create_view",
     "edit_view",
     "goto_user_edit",
+    "list_view",
     "login",
     "login_view",
     "logout",
@@ -86,6 +87,18 @@ def goto_user_edit():
     if sesh.has_session():
         return redirect("/user/me/edit")
     return redirect("/login")
+
+
+def list_view():
+    amount = request.args.get("a", 25, int)
+    page = request.args.get("p", 1, int)
+
+    limit = amount
+    offset = (page - 1) * amount
+
+    users = [to_localtime(u) for u in api.users.get_all(limit, offset)]
+
+    return render_template("users.html", users=users, amount=amount, page=page)
 
 
 def login():
@@ -218,16 +231,24 @@ def update():
 
 
 def view(user):
+    amount = request.args.get("a", 10, int)
+    page = request.args.get("p", 1, int)
+
+    limit = amount
+    offset = (page - 1) * amount
+
     user_posts = []
     if sesh.has_session() and user in ("me", session["user_id"]):
         user = session["user_id"]
-        user_posts = api.posts.get_unlisted_of(user)
+        user_posts = api.posts.get_unlisted_of(user, limit, offset)
     elif user == "me" and not sesh.has_session():
         return redirect("/login")
     else:
-        user_posts = api.posts.get_all_of(user)
+        user_posts = api.posts.get_all_of(user, limit, offset)
 
     posts = [to_localtime(post) for post in user_posts]
     user_data = api.users.get(user)
 
-    return render_template("user.html", user=user_data, posts=posts)
+    return render_template(
+        "user.html", user=user_data, posts=posts, amount=amount, page=page
+    )

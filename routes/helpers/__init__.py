@@ -81,6 +81,6 @@ def to_localtime(obj):
 
     return {
         **obj,
-        "created_at": from_timestamp(obj["created_at"]),
-        "updated_at": from_timestamp(obj["updated_at"]),
+        "created_at": from_timestamp(dict(obj).get("created_at")),
+        "updated_at": from_timestamp(dict(obj).get("updated_at")),
     }

@@ -95,6 +95,13 @@ def logout():
     abort(405)
 
 
+@app.route("/users", methods=["GET"])
+def users():
+    if request.method == "GET":
+        return routes.user.list_view()
+    abort(405)
+
+
 @app.route("/user/me/edit", methods=["GET", "POST"])
 def edit_user():
     if request.method == "GET":

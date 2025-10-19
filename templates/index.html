@@ -5,7 +5,25 @@
 {% block content %}
 <div id="wall">
   <div id="posts-list">
-    <p>Posts</p>
+    <h2>Posts</h2>
+    <div id="paginator">
+      <form action="/" method="get">
+        <div id="paginator-amount">
+          <input type="hidden" name="q" value="{{ session.query }}">
+          <label for="a">Posts shown</label>
+          <select id="a" name="a">
+            {% for v in [10, 25, 50, 100, 250] %}
+            <option value="{{ v }}" {% if amount==v %}selected{% endif %}>{{ v }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="paginator-page">
+          <label for="p">Page</label>
+          <input type="number" name="p" min="1" value="{{ page }}">
+        </div>
+        <input type="submit" value="Go">
+      </form>
+    </div>
     {% if posts %}
     {% for post in posts %}
     <div>
@@ -26,16 +44,9 @@
     <p>No posts found</p>
     {% endif %}
     {% endif %}
-  </div>
-  <div id="users-list">
-    <p>Users</p>
-    {% if users %}
-    {% for user in users %}
-    <a href="/user/{{ user.id }}">{{ user.username }}</a>
-    {% endfor %}
-    {% else %}
-    <p>No users found</p>
-    {% endif %}
+    <div>
+      <p>Showing maximum of {{ amount }} posts on page {{ page }}</p>
+    </div>
   </div>
 </div>
 {% endblock %}

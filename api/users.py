@@ -14,9 +14,14 @@ __all__ = [
 GET_USERS = """SELECT
   id,
   username,
-  display_name
+  display_name,
+  created_at
 FROM
-  users"""
+  users
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 GET_LOGIN_BY_USERNAME = """SELECT
   id,
@@ -176,8 +181,8 @@ def get(user):
     return helpers.validate_object(result)
 
 
-def get_all():
-    result = db.query(GET_USERS)
+def get_all(limit, offset):
+    result = db.query(GET_USERS, [limit, offset])
     return helpers.validate_objects(result)
 
 

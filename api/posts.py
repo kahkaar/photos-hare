@@ -32,7 +32,11 @@ WHERE
   unlisted = FALSE
 GROUP BY
   p.created_at,
-  p.id"""
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 GET_POSTS_OF_USER_ID = """SELECT
   p.id,
@@ -55,7 +59,11 @@ WHERE
   AND p.user_id = LOWER(?)
 GROUP BY
   p.created_at,
-  p.id"""
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 GET_POSTS_OF_USERNAME = """SELECT
   p.id,
@@ -79,7 +87,11 @@ WHERE
   AND u.username = LOWER(?)
 GROUP BY
   p.created_at,
-  p.id"""
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 GET_POST_BY_ROWID = """SELECT
   p.id,
@@ -182,7 +194,11 @@ WHERE
   p.user_id = LOWER(?)
 GROUP BY
   p.created_at,
-  p.id"""
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 CREATE_POST = """INSERT INTO
   posts (title, description, unlisted, user_id)
@@ -234,7 +250,11 @@ WHERE
   AND p.title LIKE ?
 GROUP BY
   p.created_at,
-  p.id"""
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
 
 LIKE = """INSERT INTO
   posts_likes (post_id, user_id, type)
@@ -262,8 +282,8 @@ def delete(post_id):
     db.execute(DELETE, [post_id])
 
 
-def find(query):
-    result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%"])
+def find(query, limit, offset):
+    result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%", limit, offset])
     return helpers.validate_objects(result)
 
 
@@ -272,22 +292,22 @@ def get(post_id):
     return helpers.validate_object(result)
 
 
-def get_all():
-    result = db.query(GET_POSTS)
+def get_all(limit, offset):
+    result = db.query(GET_POSTS, [limit, offset])
     return helpers.validate_objects(result)
 
 
-def get_all_of(user):
+def get_all_of(user, limit, offset):
     result = db.query(
         GET_POSTS_OF_USER_ID if len(user) == 32 else GET_POSTS_OF_USERNAME,
-        [user],
+        [user, limit, offset],
     )
 
     return helpers.validate_objects(result)
 
 
-def get_unlisted_of(user):
-    result = db.query(GET_ALL_POSTS_OF_USER_ID, [user])
+def get_unlisted_of(user, limit, offset):
+    result = db.query(GET_ALL_POSTS_OF_USER_ID, [user, limit, offset])
     return helpers.validate_objects(result)
 
 
