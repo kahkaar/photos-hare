@@ -9,8 +9,8 @@ import db
 # Set to 'False' if you do not need to log in as dummy user.
 GENERATE_USERS_WITH_PASSWORDS = False
 
-USER_COUNT = 10**3  # Amount of users to be generated
-POST_COUNT = 10**5  # Amount of posts to be generated
+USER_COUNT = 10**4  # Amount of users to be generated
+POST_COUNT = 10**6  # Amount of posts to be generated
 
 # In how large of a batch will the items be inserted into the database
 USERS_BATCH_SIZE = 5000
@@ -88,7 +88,7 @@ def generate_posts(count, user_ids):
 def insert_posts(cur, posts, batch_size):
     n = len(posts)
     start_time = time.time()
-    log(f"Inserting {n} posts in a batches of {batch_size}...")
+    log(f"Inserting {n} posts in batches of {batch_size}...")
     for i in range(0, n, batch_size):
         cur.executemany(
             """INSERT INTO posts (title, description, filename, unlisted, user_id)
@@ -117,5 +117,5 @@ con.commit()
 con.close()
 end_time = time.time()
 log(
-    f"Time spent committing and closing the database: {round(end_time - start_time, 2)} s"
+    f"Time spent committing and closing the database connection: {round(end_time - start_time, 2)} s"
 )
