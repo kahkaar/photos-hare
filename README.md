@@ -10,6 +10,7 @@
   - [Running the Application](#running-the-application)
   - [Developing the Application](#developing-the-application)
   - [Running Pylint](#running-pylint)
+    - [Pylint report](#pylint-report)
   - [Large Dataset](#large-dataset)
   - [Development Information](#development-information)
   - [Evaluation](#evaluation)
@@ -122,6 +123,10 @@ pylint ./ --disable=C0114,C0116 # These hide docstring errors
 
 - [C0114 (missing-module-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0114)
 - [C0116 (missing-function-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0116)
+
+
+### Pylint report
+Pylint report made with `pylint ./ --disable=C0114,C0116` can be seen at [`pylint-report.md`](./pylint-report.md). The raw report of `pylint ./` can be located at [`pylint-report.raw.txt`](./pylint-report.raw.txt)
 
 
 ## Large Dataset

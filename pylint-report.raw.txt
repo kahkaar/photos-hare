@@ -1,0 +1,203 @@
+************* Module app
+app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app.py:14:4: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:19:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:24:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:29:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:29:23: W0613: Unused argument 'e' (unused-argument)
+app.py:36:4: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:41:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:48:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:55:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:69:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:80:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:91:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:99:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:106:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:118:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:125:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:138:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:149:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:156:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:165:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:178:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:187:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:200:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:213:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:220:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module db
+db.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+db.py:16:0: C0116: Missing function or method docstring (missing-function-docstring)
+db.py:26:0: C0116: Missing function or method docstring (missing-function-docstring)
+db.py:26:0: W0102: Dangerous default value [] as argument (dangerous-default-value)
+db.py:34:0: C0116: Missing function or method docstring (missing-function-docstring)
+db.py:38:0: C0116: Missing function or method docstring (missing-function-docstring)
+db.py:38:0: W0102: Dangerous default value [] as argument (dangerous-default-value)
+db.py:45:0: C0116: Missing function or method docstring (missing-function-docstring)
+db.py:60:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module api.comments
+api/comments.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+api/comments.py:81:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/comments.py:89:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/comments.py:93:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/comments.py:98:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/comments.py:98:27: W0622: Redefining built-in 'type' (redefined-builtin)
+************* Module api.helpers
+api/helpers.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+api/helpers.py:7:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/helpers.py:11:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module api.posts
+api/posts.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+api/posts.py:296:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:307:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:311:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:316:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:321:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:326:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:331:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:340:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:345:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:356:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/posts.py:356:27: W0622: Redefining built-in 'type' (redefined-builtin)
+api/posts.py:386:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module api.tags
+api/tags.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+api/tags.py:33:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/tags.py:37:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/tags.py:42:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/tags.py:47:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module api.users
+api/users.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+api/users.py:161:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/users.py:175:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/users.py:184:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/users.py:189:0: C0116: Missing function or method docstring (missing-function-docstring)
+api/users.py:198:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module api
+api/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module routes.alert
+routes/alert.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/alert.py:8:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.error
+routes/error.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/error.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/error.py:27:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/error.py:31:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/error.py:35:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.index
+routes/index.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/index.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.post
+routes/post.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/post.py:28:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:46:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:109:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:119:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:137:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:152:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:169:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:173:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:178:4: W0622: Redefining built-in 'type' (redefined-builtin)
+routes/post.py:190:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/post.py:237:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.static
+routes/static.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/static.py:18:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/static.py:29:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.user
+routes/user.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/user.py:26:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:70:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:86:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:92:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:104:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:136:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:144:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:149:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:155:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/user.py:155:0: R0912: Too many branches (14/12) (too-many-branches)
+routes/user.py:233:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes
+routes/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+************* Module routes.helpers.alert
+routes/helpers/alert.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/helpers/alert.py:14:0: W0622: Redefining built-in 'set' (redefined-builtin)
+routes/helpers/alert.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/alert.py:14:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.helpers.csrf
+routes/helpers/csrf.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/helpers/csrf.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/csrf.py:16:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/csrf.py:20:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.helpers.jpeg
+routes/helpers/jpeg.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/helpers/jpeg.py:9:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/jpeg.py:19:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.helpers.session
+routes/helpers/session.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/helpers/session.py:48:0: W0622: Redefining built-in 'set' (redefined-builtin)
+routes/helpers/session.py:17:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:22:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:30:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:34:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:38:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:43:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/session.py:48:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.helpers
+routes/helpers/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+routes/helpers/__init__.py:25:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:41:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:45:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:49:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:55:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:59:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:65:0: C0116: Missing function or method docstring (missing-function-docstring)
+routes/helpers/__init__.py:70:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module routes.helpers.__init__
+routes/helpers/__init__.py:1:0: R0801: Similar lines in 2 files
+==api.posts:[183:192]
+==api.users:[102:111]
+  p.unlisted,
+  SUM(
+    CASE
+      WHEN pl.type = TRUE THEN 1
+      WHEN pl.type = FALSE THEN -1
+      ELSE 0
+    END
+  ) AS likes
+FROM (duplicate-code)
+routes/helpers/__init__.py:1:0: R0801: Similar lines in 2 files
+==api.posts:[74:82]
+==api.users:[130:138]
+  SUM(
+    CASE
+      WHEN pl.type = TRUE THEN 1
+      WHEN pl.type = FALSE THEN -1
+      ELSE 0
+    END
+  ) AS likes
+FROM (duplicate-code)
+routes/helpers/__init__.py:1:0: R0801: Similar lines in 2 files
+==api.posts:[47:55]
+==api.users:[103:111]
+  SUM(
+    CASE
+      WHEN pl.type = TRUE THEN 1
+      WHEN pl.type = FALSE THEN -1
+      ELSE 0
+    END
+  ) AS likes
+FROM (duplicate-code)
+routes/helpers/__init__.py:1:0: R0801: Similar lines in 2 files
+==api.posts:[84:89]
+==api.users:[140:145]
+  LEFT JOIN posts_likes AS pl ON p.id = pl.post_id
+WHERE
+  p.unlisted = FALSE
+  AND u.username = LOWER(?)
+GROUP BY (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 8.16/10 (previous run: 8.16/10, +0.00)
