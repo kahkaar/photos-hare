@@ -10,6 +10,7 @@
   - [Running the Application](#running-the-application)
   - [Developing the Application](#developing-the-application)
   - [Running Pylint](#running-pylint)
+  - [Large Dataset](#large-dataset)
   - [Development Information](#development-information)
   - [Evaluation](#evaluation)
 
@@ -112,6 +113,18 @@ pylint ./ --disable=C0114,C0116 # These hide docstring errors
 
 - [C0114 (missing-module-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0114)
 - [C0116 (missing-function-docstring)](https://sprytnyk.github.io/pylint-errors/plerr/errors/basic/C0116)
+
+
+## Large Dataset
+
+1. Be within the virtual environment with `Flask` installed and initialize the database (first three steps of [Running the Application](#running-the-application))
+
+2. See the dataset sizes and other information in file [`seed.py`](./seed.py)
+
+3. Run `seed.py`
+```bash
+python3 seed.py
+```
 
 
 ## Development Information
