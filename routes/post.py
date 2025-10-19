@@ -175,11 +175,10 @@ def like(post_id):
     csrf.validate()
 
     user_id = session["user_id"]
-    type = True if "like" in request.form else False
+    type = "like" in request.form
 
     comment_id = request.args.get("c", "").strip().lower()
     if comment_id:
-        print(comment_id, type)
         api.comments.like(comment_id, user_id, type)
         return redirect(f"/post/{post_id}#{comment_id}")
 

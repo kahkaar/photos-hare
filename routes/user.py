@@ -4,7 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import api
-import routes.helpers as helpers
+from routes import helpers
 from routes.helpers import alert, csrf, to_localtime
 from routes.helpers import session as sesh
 
