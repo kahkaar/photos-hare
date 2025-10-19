@@ -36,14 +36,24 @@
     - [X] Unlisted
     - [ ] Tag
   - [X] Allow removing of posts
-  - [ ] Allow liking of posts
+  - [X] Allow liking of posts
 
 - [ ] Comments
   - [X] Create comments on posts
   - [ ] ~~Allow editing and removing of comments~~
-  - [ ] Allow liking of comments
+  - [X] Allow liking of comments
 
 - [ ] Searching
+  - [X] Search by post title
+  - [ ] ~~Comments~~
+
+- [ ] Paginator
+  - [X] Paging posts
+  - [X] Paging users
+  - [ ] Paging comments
+
+- [ ] Seeding
+  - [X] Users
   - [X] Posts
   - [ ] Comments
 
@@ -124,6 +134,38 @@ pylint ./ --disable=C0114,C0116 # These hide docstring errors
 3. Run `seed.py`
 ```bash
 python3 seed.py
+```
+
+Example output:
+```
+Generating 10000 users...
+Generated 10000 users in 0.0 s
+Inserting 10000 users in batches of 5000...
+Inserted 10000 users in 0.13 s
+Fetching 10000 user_ids and shuffling...
+Retrieved 10000 shuffled user_ids in 0.01 s
+Generating 100000 posts...
+Generated 100000 posts in 0.09 s
+Inserting 100000 posts in batches of 5000...
+Inserted 100000 posts in 2.16 s
+Fetching 100000 post_ids and shuffling...
+Retrieved 100000 shuffled post_ids in 0.06 s
+Generating 1000000 post likes...
+Generated 1000000 likes in 1.06 s
+Inserting 1000000 post likes in batches of 5000...
+Inserted 1000000 post likes in 15.86 s
+Generating 100000 comments...
+Generated 100000 comments in 0.09 s
+Inserting 100000 comments in batches of 5000...
+Inserted 100000 comments in 1.77 s
+Fetching 100000 comment_ids and shuffling...
+Retrieved 100000 shuffled comment_ids in 0.06 s
+Generating 1000000 post likes...
+Generated 1000000 likes in 1.02 s
+Inserting 1000000 comment likes in batches of 5000...
+Inserted 1000000 comment likes in 15.78 s
+Committing and closing the database connection...
+Time spent committing and closing the database connection: 4.94 s
 ```
 
 
