@@ -83,6 +83,8 @@ CREATE TRIGGER posts_comments_updated_at_trigger AFTER UPDATE ON posts_comments
   END;
 
 CREATE UNIQUE INDEX idx_username ON users (username);
+CREATE INDEX idx_posts_tags_tag_id ON posts_tags (tag_id);
+CREATE INDEX idx_posts_tags_post_id ON posts_tags (post_id);
 CREATE INDEX idx_posts_title ON posts (title);
 CREATE INDEX idx_posts_user_id ON posts (user_id);
 CREATE INDEX idx_posts_likes_post_id ON posts_likes (post_id);

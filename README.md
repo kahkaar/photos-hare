@@ -30,11 +30,10 @@
     - [X] With a description
     - [X] With tag
   - [X] Allow unlisting of posts (does not show on main page or profile page)
-  - [ ] Allow editing of posts
-    - [ ] ~~Title~~
+  - [X] Allow editing of posts
     - [X] Description
     - [X] Unlisted
-    - [ ] Tag
+    - [X] Tag
   - [X] Allow removing of posts
   - [X] Allow liking of posts
 
@@ -43,19 +42,19 @@
   - [ ] ~~Allow editing and removing of comments~~
   - [X] Allow liking of comments
 
-- [ ] Searching
+- [X] Searching
   - [X] Search by post title
-  - [ ] ~~Comments~~
+  - [X] Search by tag
 
 - [ ] Paginator
   - [X] Paging posts
   - [X] Paging users
   - [ ] Paging comments
 
-- [ ] Seeding
+- [X] Seeding
   - [X] Users
   - [X] Posts
-  - [ ] Comments
+  - [X] Comments
 
 
 ## Running the Application

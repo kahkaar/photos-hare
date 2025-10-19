@@ -12,6 +12,15 @@
       <a href="/login">Login</a>
       <a href="/register">Register</a>
       {% endif %}
+      <form id="tag-search-box" action="/" method="get">
+        <span>
+          <label for="tq">Search (by tag)</label>
+          <input type="text" id="tq" name="tq" placeholder="Search..." {% if session.query %}
+            value="{{ session.tag_query }}" {% endif %} />
+        </span>
+        <input type="submit" value="Search" />
+      </form>
+
       <form id="search-box" action="/" method="get">
         <span>
           <label for="q">Search (by title)</label>

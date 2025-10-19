@@ -31,7 +31,9 @@
       {% endif %}
     </div>
   </div>
-  <p>{{ post.description }}</p>
+  <div id="post-description">
+    <p>{{ post.description }}</p>
+  </div>
   <img class="post" src="/i/{{ post.filename }}" alt="'{{ post.title }}' uploaded by '{{ post.display_name }}'">
   {% if post.tag %}<p>Tag: {{ post.tag }}</p>{% endif %}
 

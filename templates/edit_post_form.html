@@ -22,6 +22,12 @@
     <input type="checkbox" name="unlisted" id="unlisted" />
     {% endif %}
   </p>
+  <label for="tags">Tag</label>
+  <select id="tags" name="tags">
+    {% for tag in tags %}
+    <option value="{{ tag.id }}" {% if post.tag==tag.name %}selected{% endif %}>{{ tag.name }}</option>
+    {% endfor %}
+  </select>
   <div id="submit-container">
     <input type="submit" value="Confirm" />
     <input type="submit" name="cancel" value="Cancel">

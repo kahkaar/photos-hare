@@ -6,6 +6,7 @@ __all__ = [
     "create",
     "delete",
     "find",
+    "find_by_tag",
     "get",
     "get_all",
     "get_all_of",
@@ -156,6 +157,7 @@ GET_POST_BY_POST_ID = """SELECT
   p.updated_at,
   p.user_id AS user_id,
   u.display_name,
+  t.id AS tag_id,
   t.name AS tag,
   SUM(
     CASE
@@ -266,6 +268,30 @@ WHERE
   post_id = LOWER(?)
   AND user_id = LOWER(?)"""
 
+GET_POSTS_BY_TAG = """SELECT
+  p.id,
+  p.title,
+  p.filename,
+  p.created_at,
+  p.updated_at,
+  u.id AS user_id,
+  u.display_name
+FROM
+  posts AS p
+  JOIN users AS u ON p.user_id = u.id
+  LEFT JOIN posts_tags AS pt ON pt.post_id = p.id
+  LEFT JOIN tags AS t ON t.id = pt.tag_id
+WHERE
+  unlisted = FALSE
+  AND t.name LIKE ?
+GROUP BY
+  p.created_at,
+  p.id
+LIMIT
+  ?
+OFFSET
+  ?"""
+
 
 def create(user_id, title, description="", unlisted=False):
     result = db.queries_get_last(
@@ -284,6 +310,11 @@ def delete(post_id):
 
 def find(query, limit, offset):
     result = db.query(GET_POSTS_BY_TITLE, ["%" + query + "%", limit, offset])
+    return helpers.validate_objects(result)
+
+
+def find_by_tag(query, limit, offset):
+    result = db.query(GET_POSTS_BY_TAG, ["%" + query + "%", limit, offset])
     return helpers.validate_objects(result)
 
 

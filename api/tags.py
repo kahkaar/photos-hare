@@ -24,6 +24,15 @@ FROM
 WHERE
   pt.post_id = LOWER(?)"""
 
+REMOVE_TAG_FROM_POST = """DELETE FROM posts_tags
+WHERE
+  post_id = LOWER(?)
+  AND tag_id = LOWER(?)"""
+
+
+def delete_from_post(post_id, tag_id):
+    db.execute(REMOVE_TAG_FROM_POST, [post_id, tag_id])
+
 
 def get_all():
     result = db.query(GET_ALL_TAGS)

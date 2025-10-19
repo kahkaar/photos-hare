@@ -11,6 +11,9 @@ def view():
     query = request.args.get("q", "", str)
     session["query"] = query.strip()
 
+    tag_query = request.args.get("tq", "", str)
+    session["tag_query"] = tag_query.strip()
+
     amount = request.args.get("a", 10, int)
     page = request.args.get("p", 1, int)
 
@@ -20,6 +23,8 @@ def view():
     posts = (
         api.posts.find(query, limit, offset)
         if query
+        else api.posts.find_by_tag(tag_query, limit, offset)
+        if tag_query
         else api.posts.get_all(limit, offset)
     )
 

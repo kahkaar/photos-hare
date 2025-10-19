@@ -160,8 +160,10 @@ def edit_view(post_id):
 
     post = to_localtime(post)
 
+    tags = api.tags.get_all()
+
     csrf.init()
-    return render_template("edit_post_form.html", post=post)
+    return render_template("edit_post_form.html", post=post, tags=tags)
 
 
 def image(filename):
@@ -201,30 +203,35 @@ def update(post_id):
 
     description = post["description"]
     unlisted = post["unlisted"]
+    tag = post["tag_id"]
 
-    new_desc = request.form.get("description", description, str).strip()
+    new_desc = request.form.get("description", "", str).strip()
     new_unlisted = bool(request.form.get("unlisted", False, bool))
+    new_tag = request.form.get("tags", "", str).strip().lower()
 
     desc_changed = description != new_desc
     unlisted_changed = unlisted != new_unlisted
+    tag_changed = tag != new_tag
 
-    message = "Post was not edited"
-    if desc_changed or unlisted_changed:
+    message = ["Post was not edited"]
+    if desc_changed or unlisted_changed or tag_changed:
         api.posts.update(post_id, new_desc, new_unlisted)
 
-        status = "unlisted" if new_unlisted else "listed"
-        message = f"Edited description and listing status({status})"
+        message = []
 
-        if desc_changed and not unlisted_changed:
-            message = "Post has a new description"
-        elif not desc_changed and unlisted_changed:
-            message = (
-                "Post is now unlisted (direct links still show post)"
-                if new_unlisted
-                else "Post is now publicly listed"
-            )
+        if desc_changed:
+            message.append("description updated")
 
-    alert.set(message)
+        if unlisted_changed:
+            status = "unlisted" if new_unlisted else "listed"
+            message.append(f"listing status updated ({status})")
+
+        if tag_changed:
+            api.tags.delete_from_post(post_id, tag)
+            api.tags.insert(post_id, new_tag)
+            message.append("tag updated")
+
+    alert.set(", ".join(message))
     return redirect(f"/post/{post_id}")
 
 

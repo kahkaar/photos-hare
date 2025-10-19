@@ -200,7 +200,8 @@ div#comments>div>div.comment-content {
   word-wrap: break-word;
 }
 
-.comment-content>.comment-text {
+.comment-content>.comment-text,
+#post-description>p {
   white-space: pre-wrap;
 }
 
